@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import sys
+from functools import wraps
 from pathlib import Path
 
 from discord.ext import commands
@@ -20,7 +21,7 @@ class Watcher:
         :loop: Custom event loop. If not specified, will use the current running event loop.
         :default_logger: Whether to use the default logger (to sys.stdout) or not. Defaults to True.
     """
-    def __init__(self, client: commands.Bot, cogs_path: str, debug: bool = True, loop: asyncio.BaseEventLoop = None, default_logger: bool = True):
+    def __init__(self, client: commands.Bot, cogs_path: str = 'commands', debug: bool = True, loop: asyncio.BaseEventLoop = None, default_logger: bool = True):
         self.client = client
         self.cogs_dir = cogs_path
         self.debug = debug
@@ -122,6 +123,19 @@ class Watcher:
             self.cog_error(exc)
         else:
             logger.info(f'Cog Reloaded: {cog_dir}')
+
+    @classmethod
+    def watch(cls, **kwargs):
+        """Decorator for the on_ready event; runs the watcher."""
+        def real_decorator(function):
+            @wraps(function)
+            def wrapper(client):
+                retval = function(client)
+                cw = cls(client, **kwargs)
+                cw.start()
+                return retval
+            return wrapper
+        return real_decorator
 
     @staticmethod
     def cog_error(exc: Exception):
