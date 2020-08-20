@@ -11,7 +11,7 @@ other commands, or *(worse)* restarting your bot, every time you edit that embed
 ### Getting Started
 You can install the library with `pip install cogwatch`.
 
-You can import and start the bot anywhere you want, as long as you have access to your initialized bot class. The
+You can import and start the watcher anywhere you want, as long as you have access to your initialized bot class. The
 `on_ready` method makes a good, generic location. The first two arguments are *required*. The first is your bot instance.
  The second is the name of the directory where your command files exist. All other arguments are optional.
 
