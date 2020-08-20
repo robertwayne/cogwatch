@@ -7,7 +7,7 @@ from pathlib import Path
 from discord.ext import commands
 from watchgod import Change, awatch
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('cogwatch')
 logger.addHandler(logging.NullHandler())
 
 
@@ -138,9 +138,9 @@ def watch(**kwargs):
     def decorator(function):
         @wraps(function)
         async def wrapper(client):
-            retval = await function(client)
             cw = Watcher(client, **kwargs)
             await cw.start()
+            retval = await function(client)
             return retval
         return wrapper
     return decorator
