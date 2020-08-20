@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/cogwatch.svg)](https://badge.fury.io/py/cogwatch)
+
 # cogwatch
 
 *Automatic hot-reloading for your discord.py command files.*
