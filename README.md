@@ -11,7 +11,7 @@ other commands, or *(worse)* restarting your bot, every time you edit that embed
 ### Getting Started
 You can install the library with `pip install cogwatch`.
 
-You can import and start the bot anywhere you want, as long as you have access to your initialized bot class. The
+You can import and start the watcher anywhere you want, as long as you have access to your initialized bot class. The
 `on_ready` method makes a good, generic location. The first two arguments are *required*. The first is your bot instance.
  The second is the name of the directory where your command files exist. All other arguments are optional.
 
@@ -40,7 +40,7 @@ terminal or `tail` a file -- you can set up a custom logger like so:
 import logging
 import sys
 
-watch_log = logging.getLogger(__name__)
+watch_log = logging.getLogger('cogwatch')
 watch_log.setLevel(logging.INFO)
 watch_handler = logging.StreamHandler(sys.stdout)
 watch_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
