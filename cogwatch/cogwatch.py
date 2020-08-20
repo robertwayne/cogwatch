@@ -124,19 +124,6 @@ class Watcher:
         else:
             logger.info(f'Cog Reloaded: {cog_dir}')
 
-    @classmethod
-    def watch(cls, **kwargs):
-        """Decorator for the on_ready event; runs the watcher."""
-        def real_decorator(function):
-            @wraps(function)
-            def wrapper(client):
-                retval = function(client)
-                cw = cls(client, **kwargs)
-                cw.start()
-                return retval
-            return wrapper
-        return real_decorator
-
     @staticmethod
     def cog_error(exc: Exception):
         """Logs exceptions. TODO: Need thorough exception handling."""
@@ -144,3 +131,16 @@ class Watcher:
             return
 
         logger.exception(exc)
+
+
+def watch(**kwargs):
+    """Decorator for the on_ready event; runs the watcher."""
+    def decorator(function):
+        @wraps(function)
+        async def wrapper(client):
+            retval = await function(client)
+            cw = Watcher(client, **kwargs)
+            await cw.start()
+            return retval
+        return wrapper
+    return decorator

@@ -1,1 +1,1 @@
-from cogwatch.cogwatch import Watcher
+from cogwatch.cogwatch import Watcher, watch

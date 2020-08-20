@@ -16,11 +16,11 @@ You can import and start the watcher anywhere you want, as long as you have acce
  The second is the name of the directory where your command files exist. All other arguments are optional.
 
 ```python
-from cogwatch import Watcher
+from cogwatch import watch
 
+@watch()
 async def on_ready(self):
-    cw = Watcher(self, 'commands', debug=False, loop=None, default_logger=True)
-    await cw.start()
+    pass
 ```
 
 By default the library will use the running event loop. If you wish to pass in a specific loop, you can do so with the
@@ -30,6 +30,8 @@ By default the library will use the running event loop. If you wish to pass in a
 [here](https://docs.python.org/3/library/constants.html). In short, unless you run Python with the *-O* flag from
 your command line, **\_\_debug\_\_** will be **True**. If you just want to bypass this feature, pass in `debug=False` and
 it won't matter if the flag is enabled or not. *This is a development tool. You should not run it on production.*
+
+There is a complete example bot in the *examples/* directory that shows all the arguments.
 
 ### Logging
 By default the library has a logger enabled so users can get output to the console. You can disable this by
