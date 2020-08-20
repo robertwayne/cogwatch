@@ -11,7 +11,7 @@ other commands, or *(worse yet)* restarting your bot, every time you edit that e
 ### Getting Started
 You can install the library with `pip install cogwatch`.
 
-Import the watch decorator and apply it above your `on_ready` method and let the magic take effect. If you use a 
+Import the watch decorator and apply it to your `on_ready` method and let the magic take effect. If you use a 
 directory other than *'commands'* for your command files, you should pass in `cogs_path='your_path_here'` in the decorator.
 
 *There is a complete example bot in the *examples/* directory that shows all the arguments.*
