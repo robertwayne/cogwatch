@@ -52,3 +52,7 @@ watch_handler = logging.StreamHandler(sys.stdout)
 watch_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
 watch_log.addHandler(watch_handler)
 ```
+
+-----
+
+Check out my other discord.py utility: **[dpymenus](https://github.com/robertwayne/dpymenus)** -- *Simplified menus for discord.py developers.*
