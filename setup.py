@@ -5,7 +5,7 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
         name='cogwatch',
-        version='1.0.1',
+        version='1.1.0',
         author='Rob Wagner',
         author_email='rob.wagner@outlook.com',
         license='License :: OSI Approved :: MIT License',
