@@ -8,15 +8,6 @@
 and automatically reload them as you modify or move them around in real-time. No more manually reloading commands with 
 other commands, or *(worse)* restarting your bot, every time you edit that embed!
 
-`cogwatch` recursively checks from the given directory and will not load files which are not `discord.py` cogs, nor will it
-load code which would otherwise cause a syntax error. It uses the builtin extension methods which do a great job at
-ensuring your commands stay loaded even if you save a change which would otherwise not run.
-
-### Tables of Contents
-+ [Getting Started](#getting-started)
-+ [Logging](#logging)
-
-
 ### Getting Started
 You can install the library with `pip install cogwatch`.
 
