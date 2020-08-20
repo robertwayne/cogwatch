@@ -40,7 +40,7 @@ terminal or `tail` a file -- you can set up a custom logger like so:
 import logging
 import sys
 
-watch_log = logging.getLogger(__name__)
+watch_log = logging.getLogger('cogwatch')
 watch_log.setLevel(logging.INFO)
 watch_handler = logging.StreamHandler(sys.stdout)
 watch_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
