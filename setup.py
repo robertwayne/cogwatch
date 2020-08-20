@@ -23,4 +23,7 @@ setuptools.setup(
             'Development Status :: 5 - Production/Stable',
         ],
         python_requires='>=3.8',
+        install_requires=[
+            'watchgod'
+        ]
 )
