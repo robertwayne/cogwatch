@@ -6,21 +6,27 @@
 
 `cogwatch` is a utility that you can plug into your `discord.py` bot that will watch your command files directory *(cogs)* 
 and automatically reload them as you modify or move them around in real-time. No more manually reloading commands with 
-other commands, or *(worse)* restarting your bot, every time you edit that embed!
+other commands, or *(worse yet)* restarting your bot, every time you edit that embed!
 
 ### Getting Started
 You can install the library with `pip install cogwatch`.
 
-You can import and start the watcher anywhere you want, as long as you have access to your initialized bot class. The
-`on_ready` method makes a good, generic location. The first two arguments are *required*. The first is your bot instance.
- The second is the name of the directory where your command files exist. All other arguments are optional.
+Import the watch decorator and apply it above your `on_ready` method and let the magic take effect. If you use a 
+directory other than *'commands'* for your command files, you should pass in `cogs_path='your_path_here'` in the decorator.
+
+*There is a complete example bot in the *examples/* directory that shows all the arguments.*
 
 ```python
+from discord.ext import commands
 from cogwatch import watch
 
-@watch()
-async def on_ready(self):
-    pass
+class ExampleBot(commands.Bot):
+    def __init__(self):
+        super().__init__(command_prefix='!')
+
+    @watch()
+    async def on_ready(self):
+        print('Bot ready!')
 ```
 
 By default the library will use the running event loop. If you wish to pass in a specific loop, you can do so with the
@@ -30,8 +36,6 @@ By default the library will use the running event loop. If you wish to pass in a
 [here](https://docs.python.org/3/library/constants.html). In short, unless you run Python with the *-O* flag from
 your command line, **\_\_debug\_\_** will be **True**. If you just want to bypass this feature, pass in `debug=False` and
 it won't matter if the flag is enabled or not. *This is a development tool. You should not run it on production.*
-
-There is a complete example bot in the *examples/* directory that shows all the arguments.
 
 ### Logging
 By default the library has a logger enabled so users can get output to the console. You can disable this by
