@@ -16,17 +16,20 @@ class Watcher:
 
     Attributes
         :client: A discord Bot client.
-        :cogs_path: The name of your default cogs directory; cogwatch will only watch within this directory -- recursively.
+        :cogs_path: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
         :debug: Whether to run the bot only when the debug flag is True. Defaults to True.
         :loop: Custom event loop. If not specified, will use the current running event loop.
         :default_logger: Whether to use the default logger (to sys.stdout) or not. Defaults to True.
+        :preload: Whether to detect and load all found cogs on startup. Defaults to False.
     """
-    def __init__(self, client: commands.Bot, cogs_path: str = 'commands', debug: bool = True, loop: asyncio.BaseEventLoop = None, default_logger: bool = True):
+    def __init__(self, client: commands.Bot, cogs_path: str = 'commands', debug: bool = True,
+                 loop: asyncio.BaseEventLoop = None, default_logger: bool = True, preload: bool = False):
         self.client = client
-        self.cogs_dir = cogs_path
+        self.cogs_path = cogs_path
         self.debug = debug
         self.loop = loop
         self.default_logger = default_logger
+        self.preload = preload
 
         if default_logger:
             _default = logging.getLogger(__name__)
@@ -40,12 +43,11 @@ class Watcher:
         """Returns the cog file name without .py appended to it."""
         return path.split('\\')[-1:][0][:-3]
 
-    @staticmethod
-    def get_dotted_cog_path(path: str) -> str:
+    def get_dotted_cog_path(self, path: str) -> str:
         """Returns the full dotted path that discord.py uses to load cog files."""
         full_dir = Path(path).parents[0]
         tokens = str(full_dir).split('\\')
-        root_index = tokens.index('commands')
+        root_index = tokens.index(self.cogs_path)
 
         return '.'.join([token for token in tokens[root_index:]])
 
@@ -54,7 +56,7 @@ class Watcher:
         logger.info('Watching for file changes...')
 
         while True:
-            async for changes in awatch(Path.cwd() / self.cogs_dir):
+            async for changes in awatch(Path.cwd() / self.cogs_path):
                 reverse_ordered_changes = sorted(changes, reverse=True)
 
                 for change in reverse_ordered_changes:
@@ -64,7 +66,7 @@ class Watcher:
                     filename = self.get_cog_name(change_path)
 
                     new_dir = self.get_dotted_cog_path(change_path)
-                    cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.cogs_dir}.{filename.lower()}'
+                    cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.cogs_path}.{filename.lower()}'
 
                     if change_type == Change.deleted:
                         await self.unload(cog_dir)
@@ -87,20 +89,20 @@ class Watcher:
 
     async def start(self):
         """Checks for a user-specified event loop to start on, otherwise uses current running loop."""
+        if self.preload:
+            await self._preload()
+
         if self.check_debug():
             if self.loop is None:
                 self.loop = asyncio.get_event_loop()
-
             self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
         """Loads a cog file into the client."""
         try:
             self.client.load_extension(cog_dir)
-
         except Exception as exc:
             self.cog_error(exc)
-
         else:
             logger.info(f'Cog Loaded: {cog_dir}')
 
@@ -108,10 +110,8 @@ class Watcher:
         """Unloads a cog file into the client."""
         try:
             self.client.unload_extension(cog_dir)
-
         except Exception as exc:
             self.cog_error(exc)
-
         else:
             logger.info(f'Cog Unloaded: {cog_dir}')
 
@@ -128,13 +128,16 @@ class Watcher:
     def cog_error(exc: Exception):
         """Logs exceptions. TODO: Need thorough exception handling."""
         if isinstance(exc, (commands.ExtensionError, SyntaxError)):
-            return
+            logger.exception(exc)
 
-        logger.exception(exc)
+    async def _preload(self):
+        logger.info('Preloading...')
+        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.cogs_path).rglob('*.py')}:
+            new_dir = self.get_dotted_cog_path(cog[1])
+            await self.load('.'.join([new_dir, cog[0]]))
 
 
 def watch(**kwargs):
-    """Decorator for the on_ready event; runs the watcher."""
     def decorator(function):
         @wraps(function)
         async def wrapper(client):
