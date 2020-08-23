@@ -5,7 +5,7 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
         name='cogwatch',
-        version='1.1.1',
+        version='1.1.2',
         author='Rob Wagner',
         author_email='rob.wagner@outlook.com',
         license='License :: OSI Approved :: MIT License',
@@ -15,6 +15,8 @@ setuptools.setup(
         url='https://github.com/robertwayne/cogwatch',
         packages=setuptools.find_packages(),
         classifiers=[
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
             'Operating System :: OS Independent',
             'Typing :: Typed',
@@ -22,7 +24,7 @@ setuptools.setup(
             'Intended Audience :: Developers',
             'Development Status :: 5 - Production/Stable',
         ],
-        python_requires='>=3.8',
+        python_requires='>=3.7',
         install_requires=[
             'watchgod'
         ]

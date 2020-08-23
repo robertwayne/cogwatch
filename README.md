@@ -1,14 +1,25 @@
-[![PyPI version](https://badge.fury.io/py/cogwatch.svg)](https://badge.fury.io/py/cogwatch)
+<h1 align="center">cogwatch</h1>
+    
+<div align="center">
+  <strong><i>Automatic hot-reloading for your discord.py command files.</i></strong>
+  <br>
+  <br>
+  
+  <a href="https://pypi.org/project/cogwatch">
+    <img src="https://img.shields.io/pypi/v/cogwatch?color=0073B7&label=Latest&style=for-the-badge" alt="Version" />
+  </a>
+  
+  <a href="https://python.org">
+    <img src="https://img.shields.io/pypi/pyversions/cogwatch?color=0073B7&style=for-the-badge" alt="Python Version" />
+  </a>
+</div>
+<br>
 
-# cogwatch
-
-*Automatic hot-reloading for your discord.py command files.*
-
+### Getting Started
 `cogwatch` is a utility that you can plug into your `discord.py` bot that will watch your command files directory *(cogs)* 
 and automatically reload them as you modify or move them around in real-time. No more manually reloading commands with 
 other commands, or *(worse yet)* restarting your bot, every time you edit that embed!
 
-### Getting Started
 You can install the library with `pip install cogwatch`.
 
 Import the `@watch()` decorator and apply it to your `on_ready` method and let the magic take effect.
