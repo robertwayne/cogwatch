@@ -1,4 +1,4 @@
-<h1 align="center">cogwatch</h1>
+<h1 align="center">Cog Watch</h1>
     
 <div align="center">
   <strong><i>Automatic hot-reloading for your discord.py command files.</i></strong>
