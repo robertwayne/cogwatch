@@ -9,7 +9,7 @@ class ExampleBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix='!')
 
-    @watch(cogs_path='commands', debug=False, loop=None, default_logger=True)
+    @watch(cogs_path='commands', debug=False, loop=None)
     async def on_ready(self):
         print('Bot ready.')
 
@@ -21,8 +21,8 @@ class ExampleBot(commands.Bot):
 
 
 async def main():
-    bot = ExampleBot()
-    await bot.start('TOKEN_HERE')
+    client = ExampleBot()
+    await client.start('YOUR_TOKEN_GOES_HERE')
 
 if __name__ == '__main__':
     asyncio.run(main())

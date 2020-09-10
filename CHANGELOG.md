@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.4] -- 2020-09-10
+
+### Added
+- New example for the classless bot structure and manually instantiating a watcher.
+
+
+### Changed
+- Fixed a typo in the class-based bot example and renamed it to `subclass_bot.py` to stay in convention with
+the new `classless_bot.py`. 
+
+
+## [1.1.3] - 2020-08-23
+
+### Added
+- `cogwatch` will now log when a directory is modified within the `cogs_path` directory.
+
 ## [1.1.1] - 2020-08-21
 
 ### Added
