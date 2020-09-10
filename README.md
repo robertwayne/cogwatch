@@ -34,7 +34,7 @@ class ExampleBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix='!')
 
-    @watch()
+    @watch(cogs_path='commands', preload=True)
     async def on_ready(self):
         print('Bot ready.')
 
@@ -46,8 +46,8 @@ class ExampleBot(commands.Bot):
 
 
 async def main():
-    bot = ExampleBot()
-    await bot.start('TOKEN_HERE')
+    client = ExampleBot()
+    await client.start('YOUR_TOKEN_GOES_HERE')
 
 if __name__ == '__main__':
     asyncio.run(main())
@@ -59,13 +59,23 @@ your command line, **\_\_debug\_\_** will be **True**. If you just want to bypas
 it won't matter if the flag is enabled or not. *This is a development tool. You should not run it on production.*
 
 #### Using a Classless Bot
-If you are using a classless bot you cannot use the decorator method. See `examples/classless_bot.py` for a full
-example on how to add `cogwatch` to your bot. You have to manually create the watcher like so:
+If you are using a classless bot you cannot use the decorator method and instead must manually create your watcher.
+
 ```python
+from discord.ext import commands
 from cogwatch import Watcher
 
-watcher = Watcher(cogs_path='commands')
-await watcher.start()
+client = commands.Bot(command_prefix='!')
+
+
+@client.event
+async def on_ready():
+    print('Bot ready.')
+
+    watcher = Watcher(client, cogs_path='commands', preload=True)
+    await watcher.start()
+
+client.run('YOUR_TOKEN_GOES_HERE')
 ```
 
 ### Configuration
