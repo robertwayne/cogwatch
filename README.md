@@ -58,12 +58,21 @@ if __name__ == '__main__':
 your command line, **\_\_debug\_\_** will be **True**. If you just want to bypass this feature, pass in `debug=False` and
 it won't matter if the flag is enabled or not. *This is a development tool. You should not run it on production.*
 
+#### Using a Classless Bot
+If you are using a classless bot you cannot use the decorator method. See `examples/classless_bot.py` for a full
+example on how to add `cogwatch` to your bot. You have to manually create the watcher like so:
+```python
+from cogwatch import Watcher
+watcher = Watcher(cogs_path='commands')
+watcher.start()
+```
+
 ### Configuration
 You can pass any of these values to the decorator:
 
 **cogs_path='commands'**: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
 
-**debug=True**: Whether to run the bot only wheen the Python **\_\_debug\_\_** flag is True. Defaults to True.
+**debug=True**: Whether to run the bot only when the Python **\_\_debug\_\_** flag is True. Defaults to True.
 
 **loop=None**: Custom event loop. Defaults to the current running event loop.
 
