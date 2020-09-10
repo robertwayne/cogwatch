@@ -63,8 +63,9 @@ If you are using a classless bot you cannot use the decorator method. See `examp
 example on how to add `cogwatch` to your bot. You have to manually create the watcher like so:
 ```python
 from cogwatch import Watcher
+
 watcher = Watcher(cogs_path='commands')
-watcher.start()
+await watcher.start()
 ```
 
 ### Configuration
