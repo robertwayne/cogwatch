@@ -22,7 +22,7 @@ other commands, or *(worse yet)* restarting your bot, every time you edit that e
 
 You can install the library with `pip install cogwatch`.
 
-Import the `@watch()` decorator and apply it to your `on_ready` method and let the magic take effect.
+Import the `watch` decorator and apply it to your `on_ready` method and let the magic take effect.
 
 ```python
 import asyncio
@@ -34,7 +34,7 @@ class ExampleBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix='!')
 
-    @watch(cogs_path='commands', preload=True)
+    @watch(cogs_path='commands')
     async def on_ready(self):
         print('Bot ready.')
 
