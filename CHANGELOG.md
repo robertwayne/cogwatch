@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.5] -- 2020-09-16
+
+### Changed
+- Fixed a bug where the watcher would spam errors if the specified cog directory did not exist.
+- The watcher will additionally track changes to the command directory name. The watcher will 
+will seek for a matching directory name in the background and restart itself once found *(this includes
+reloading all cogs within that directory, if not loaded)*.
+- Refactored some internal code.
+
 ## [1.1.4] -- 2020-09-10
 
 ### Added
