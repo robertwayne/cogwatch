@@ -54,48 +54,78 @@ class Watcher:
 
     async def _start(self):
         """Starts a watcher, monitoring for any file changes and dispatching event-related methods appropriatly."""
-        logger.info('Watching for file changes...')
+        while self.dir_exists():
+            try:
+                async for changes in awatch(Path.cwd() / self.cogs_path):
+                    self.validate_dir()  # cannot figure out how to validate within awatch; some anamolies but it does work...
 
-        while True:
-            async for changes in awatch(Path.cwd() / self.cogs_path):
-                reverse_ordered_changes = sorted(changes, reverse=True)
+                    reverse_ordered_changes = sorted(changes, reverse=True)
 
-                for change in reverse_ordered_changes:
-                    change_type = change[0]
-                    change_path = change[1]
+                    for change in reverse_ordered_changes:
+                        change_type = change[0]
+                        change_path = change[1]
 
-                    filename = self.get_cog_name(change_path)
+                        filename = self.get_cog_name(change_path)
 
-                    new_dir = self.get_dotted_cog_path(change_path)
-                    cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.cogs_path}.{filename.lower()}'
+                        new_dir = self.get_dotted_cog_path(change_path)
+                        cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.cogs_path}.{filename.lower()}'
 
-                    if change_type == Change.deleted:
-                        await self.unload(cog_dir)
-                    elif change_type == Change.added:
-                        await self.load(cog_dir)
-                    elif change_type == Change.modified and change_type != (Change.added or Change.deleted):
-                        await self.reload(cog_dir)
+                        if change_type == Change.deleted:
+                            await self.unload(cog_dir)
+                        elif change_type == Change.added:
+                            await self.load(cog_dir)
+                        elif change_type == Change.modified and change_type != (Change.added or Change.deleted):
+                            await self.reload(cog_dir)
 
-            await asyncio.sleep(1)
+            except FileNotFoundError:
+                continue
+
+            else:
+                await asyncio.sleep(1)
+
+        else:
+            await self.start()
 
     def check_debug(self):
         """Determines if the watcher should be added to the event loop based on debug flags."""
         return any([(self.debug and __debug__), not self.debug])
 
+    def dir_exists(self):
+        """Predicate method for checking whether the specified dir exists."""
+        return Path(Path.cwd() / self.cogs_path).exists()
+
+    def validate_dir(self):
+        """Method for raising a FileNotFound error when the specified directory does not exist."""
+        if not self.dir_exists():
+            raise FileNotFoundError
+        return True
+
     async def start(self):
         """Checks for a user-specified event loop to start on, otherwise uses current running loop."""
-        if self.preload:
-            await self._preload()
+        _check = False
+        while not self.dir_exists():
+            if not _check:
+                logging.error(f'The path {Path.cwd() / self.cogs_path} does not exist.')
+                _check = True
 
-        if self.check_debug():
-            if self.loop is None:
-                self.loop = asyncio.get_event_loop()
-            self.loop.create_task(self._start())
+        else:
+            logging.info(f'Found {Path.cwd() / self.cogs_path}!')
+            if self.preload:
+                await self._preload()
+
+            if self.check_debug():
+                if self.loop is None:
+                    self.loop = asyncio.get_event_loop()
+
+                logger.info(f'Watching for file changes in {Path.cwd() / self.cogs_path}...')
+                self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
         """Loads a cog file into the client."""
         try:
             self.client.load_extension(cog_dir)
+        except commands.ExtensionAlreadyLoaded:
+            return
         except Exception as exc:
             self.cog_error(exc)
         else:
