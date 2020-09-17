@@ -22,6 +22,7 @@ class Watcher:
         :default_logger: Whether to use the default logger (to sys.stdout) or not. Defaults to True.
         :preload: Whether to detect and load all found cogs on startup. Defaults to False.
     """
+
     def __init__(self, client: commands.Bot, cogs_path: str = 'commands', debug: bool = True,
                  loop: asyncio.BaseEventLoop = None, default_logger: bool = True, preload: bool = False):
         self.client = client
@@ -79,13 +80,7 @@ class Watcher:
 
     def check_debug(self):
         """Determines if the watcher should be added to the event loop based on debug flags."""
-        if self.debug:
-            if __debug__:
-                return True
-            else:
-                return False
-        else:
-            return True
+        return any([(self.debug and __debug__), not self.debug])
 
     async def start(self):
         """Checks for a user-specified event loop to start on, otherwise uses current running loop."""
