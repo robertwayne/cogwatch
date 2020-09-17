@@ -138,6 +138,7 @@ class Watcher:
 
 
 def watch(**kwargs):
+    """Instantiates a watcher by hooking into a Bot client methods' `self` attribute."""
     def decorator(function):
         @wraps(function)
         async def wrapper(client):
