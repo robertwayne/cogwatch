@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "cogwatch"
+version = "1.1.7"
+description = "Automatic hot-reloading for your discord.py command files."
+authors = ["Rob Wagner <13954303+robertwayne@users.noreply.github.com>"]
+license = "MIT"
+readme = 'README.md'
+homepage = 'https://github.com/robertwayne/cogwatch'
+repository = 'https://github.com/robertwayne/cogwatch'
+keywords = ['discord.py', 'discord bot', 'cogs', 'hot-reload']
+classifiers=[
+    'Operating System :: OS Independent',
+    'Typing :: Typed',
+    'Topic :: Communications :: Chat',
+    'Intended Audience :: Developers',
+    'Development Status :: 5 - Production/Stable',
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+"discord.py" = "^1.5"
+watchgod = "0.6"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
