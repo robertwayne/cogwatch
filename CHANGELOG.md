@@ -4,13 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.1.6] -- UNRELEASED
+## [1.1.6 -- 1.1.7] -- 2020-12-02
 
 ### Changed
+- Fixed a bug where nested project structures would break internal path resolution.
+- A `ValueError` will now be raised if the user uses invalid input delimiters on
+the `cogs_path` parameter.
 
 ### Added
+- Migrated to the Poetry package & dependency manager.
+- New dev dependency for testing: `pytest`.
+- Included several test cases on `get_dotted_cog_path` and `get_cog_name`
+ensuring they are returning usable values.
 
 ### Removed
+- Removed setup.py, requirements.txt, build.ps1 in favor of the Poetry ecosystem.
 
 ## [1.1.5] -- 2020-09-16
 
