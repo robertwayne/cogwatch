@@ -51,7 +51,10 @@ class Watcher:
 
         # iterate over the list backwards in order to get the first occurence in cases where a duplicate
         # name exists in the path (ie. example_proj/example_proj/commands)
-        root_index = rtokens.index(self.cogs_path.split('/')[0]) + 1
+        try:
+            root_index = rtokens.index(self.cogs_path.split('/')[0]) + 1
+        except ValueError:
+            raise ValueError('Use forward-slash delimiter in your `cogs_path` parameter.')
 
         return '.'.join([token for token in tokens[-root_index:-1]])
 
