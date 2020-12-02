@@ -48,6 +48,9 @@ class Watcher:
         """Returns the full dotted path that discord.py uses to load cog files."""
         tokens = str(path).split('\\')
         rtokens = list(reversed(tokens))
+
+        # iterate over the list backwards in order to get the first occurence in cases where a duplicate
+        # name exists in the path (ie. example_proj/example_proj/commands)
         root_index = rtokens.index(self.cogs_path.split('/')[0]) + 1
 
         return '.'.join([token for token in tokens[-root_index:-1]])
