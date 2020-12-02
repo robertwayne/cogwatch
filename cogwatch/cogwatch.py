@@ -46,11 +46,11 @@ class Watcher:
 
     def get_dotted_cog_path(self, path: str) -> str:
         """Returns the full dotted path that discord.py uses to load cog files."""
-        full_dir = Path(path).parents[0]
-        tokens = str(full_dir).split('\\')
-        root_index = tokens.index(self.cogs_path)
+        tokens = str(path).split('\\')
+        rtokens = list(reversed(tokens))
+        root_index = rtokens.index(self.cogs_path.split('/')[0]) + 1
 
-        return '.'.join([token for token in tokens[root_index:]])
+        return '.'.join([token for token in tokens[-root_index:-1]])
 
     async def _start(self):
         """Starts a watcher, monitoring for any file changes and dispatching event-related methods appropriatly."""
