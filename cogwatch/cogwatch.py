@@ -43,13 +43,11 @@ class Watcher:
     @staticmethod
     def get_cog_name(path: str) -> str:
         """Returns the cog file name without .py appended to it."""
-        _path = os.path.normpath(path)
-        return _path.split(os.sep)[-1:][0][:-3]
+        return path.split(os.sep)[-1:][0][:-3]
 
     def get_dotted_cog_path(self, path: str) -> str:
         """Returns the full dotted path that discord.py uses to load cog files."""
-        _path = os.path.normpath(path)
-        tokens = _path.split(os.sep)
+        tokens = path.split(os.sep)
         rtokens = list(reversed(tokens))
 
         # iterate over the list backwards in order to get the first occurence in cases where a duplicate
@@ -73,10 +71,12 @@ class Watcher:
                     for change in reverse_ordered_changes:
                         change_type = change[0]
                         change_path = change[1]
+                        
+                        normalized_path = os.path.normpath(change_path)
 
-                        filename = self.get_cog_name(change_path)
+                        filename = self.get_cog_name(normalized_path)
 
-                        new_dir = self.get_dotted_cog_path(change_path)
+                        new_dir = self.get_dotted_cog_path(normalized_path)
                         cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.cogs_path}.{filename.lower()}'
 
                         if change_type == Change.deleted:
