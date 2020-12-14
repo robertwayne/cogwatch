@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 import sys
 from functools import wraps
 from pathlib import Path
@@ -42,11 +43,13 @@ class Watcher:
     @staticmethod
     def get_cog_name(path: str) -> str:
         """Returns the cog file name without .py appended to it."""
-        return path.split('\\')[-1:][0][:-3]
+        _path = os.path.normpath(path)
+        return _path.split(os.sep)[-1:][0][:-3]
 
     def get_dotted_cog_path(self, path: str) -> str:
         """Returns the full dotted path that discord.py uses to load cog files."""
-        tokens = str(path).split('\\')
+        _path = os.path.normpath(path)
+        tokens = _path.split(os.sep)
         rtokens = list(reversed(tokens))
 
         # iterate over the list backwards in order to get the first occurence in cases where a duplicate
