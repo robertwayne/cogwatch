@@ -72,8 +72,9 @@ client = commands.Bot(command_prefix='!')
 async def on_ready():
     print('Bot ready.')
 
-    watcher = Watcher(client, cogs_path='commands')
+    watcher = Watcher(client, path='commands')
     await watcher.start()
+
 
 client.run('YOUR_TOKEN_GOES_HERE')
 ```
