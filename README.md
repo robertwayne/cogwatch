@@ -34,7 +34,7 @@ class ExampleBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix='!')
 
-    @watch(cogs_path='commands')
+    @watch(path='commands')
     async def on_ready(self):
         print('Bot ready.')
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 **NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on Python. You can read more about that 
 [here](https://docs.python.org/3/library/constants.html). In short, unless you run Python with the *-O* flag from
 your command line, **\_\_debug\_\_** will be **True**. If you just want to bypass this feature, pass in `debug=False` and
-it won't matter if the flag is enabled or not. *This is a development tool. You should not run it on production.*
+it won't matter if the flag is enabled or not.
 
 #### Using a Classless Bot
 If you are using a classless bot you cannot use the decorator method and instead must manually create your watcher.
@@ -82,7 +82,7 @@ client.run('YOUR_TOKEN_GOES_HERE')
 ### Configuration
 You can pass any of these values to the decorator:
 
-**cogs_path='commands'**: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
+**path='commands'**: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
 
 **debug=True**: Whether to run the bot only when the Python **\_\_debug\_\_** flag is True. Defaults to True.
 
@@ -90,10 +90,10 @@ You can pass any of these values to the decorator:
 
 **default_logger=True**: Whether to use the default logger *(to sys.stdout)* or not. Defaults to True.
 
-**preload=False**: Whether to detect and load all found cogs on startup. Defaults to False.
+**preload=False**: Whether to detect and load all found cogs on start. Defaults to False.
 
 ### Logging
-By default the utility has a logger configured so users can get output to the console. You can disable this by
+By default, the utility has a logger configured so users can get output to the console. You can disable this by
 passing in `default_logger=False`. If you want to hook into the logger -- for example, to pipe your output to another
 terminal or `tail` a file -- you can set up a custom logger like so:
 
