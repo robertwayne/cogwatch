@@ -21,7 +21,7 @@ def test_get_dotted_cog_path():
     posix_nested_path = options_watcher.get_dotted_cog_path("/usr/example_bot/example_bot/commands/cmd.py")
 
     # test deeper nests
-    options_watcher.cogs_path = "example_bot/even/deeper/commands"
+    options_watcher.path = "example_bot/even/deeper/commands"
     deep_nested_path = options_watcher.get_dotted_cog_path(
         "E:\\Examples\\example_bot\\example_bot\\even\\deeper\\commands\\cmd.py"
     )
@@ -45,12 +45,12 @@ def test_get_dotted_cog_path_input():
 
     # test invalid input backslash
     with pytest.raises(ValueError):
-        default_watcher.cogs_path = "example_bot\\commands"
+        default_watcher.path = "example_bot\\commands"
         default_watcher.get_dotted_cog_path("E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py")
 
     # test invalid input dotted
     with pytest.raises(ValueError):
-        default_watcher.cogs_path = "example_bot.commands"
+        default_watcher.path = "example_bot.commands"
         default_watcher.get_dotted_cog_path("E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py")
 
 

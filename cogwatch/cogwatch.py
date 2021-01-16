@@ -34,7 +34,7 @@ class Watcher:
         preload: bool = False,
     ):
         self.client = client
-        self.cogs_path = path
+        self.path = path
         self.debug = debug
         self.loop = loop
         self.default_logger = default_logger
@@ -62,7 +62,7 @@ class Watcher:
         # iterate over the list backwards in order to get the first occurrence in cases where a duplicate
         # name exists in the path (ie. example_proj/example_proj/commands)
         try:
-            root_index = rtokens.index(self.cogs_path.split("/")[0]) + 1
+            root_index = rtokens.index(self.path.split("/")[0]) + 1
         except ValueError:
             raise ValueError("Use forward-slash delimiter in your `cogs_path` parameter.")
 
@@ -72,7 +72,7 @@ class Watcher:
         """Starts a watcher, monitoring for any file changes and dispatching event-related methods appropriately."""
         while self.dir_exists():
             try:
-                async for changes in awatch(Path.cwd() / self.cogs_path):
+                async for changes in awatch(Path.cwd() / self.path):
                     self.validate_dir()  # cannot figure out how to validate within awatch; some anomalies but it does work...
 
                     reverse_ordered_changes = sorted(changes, reverse=True)
@@ -84,7 +84,7 @@ class Watcher:
                         filename = self.get_cog_name(change_path)
 
                         new_dir = self.get_dotted_cog_path(change_path)
-                        cog_dir = f"{new_dir}.{filename.lower()}" if new_dir else f"{self.cogs_path}.{filename.lower()}"
+                        cog_dir = f"{new_dir}.{filename.lower()}" if new_dir else f"{self.path}.{filename.lower()}"
 
                         if change_type == Change.deleted:
                             await self.unload(cog_dir)
@@ -108,7 +108,7 @@ class Watcher:
 
     def dir_exists(self):
         """Predicate method for checking whether the specified dir exists."""
-        return Path(Path.cwd() / self.cogs_path).exists()
+        return Path(Path.cwd() / self.path).exists()
 
     def validate_dir(self):
         """Method for raising a FileNotFound error when the specified directory does not exist."""
@@ -121,11 +121,11 @@ class Watcher:
         _check = False
         while not self.dir_exists():
             if not _check:
-                logging.error(f"The path {Path.cwd() / self.cogs_path} does not exist.")
+                logging.error(f"The path {Path.cwd() / self.path} does not exist.")
                 _check = True
 
         else:
-            logging.info(f"Found {Path.cwd() / self.cogs_path}!")
+            logging.info(f"Found {Path.cwd() / self.path}!")
             if self.preload:
                 await self._preload()
 
@@ -133,7 +133,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logger.info(f"Watching for file changes in {Path.cwd() / self.cogs_path}...")
+                logger.info(f"Watching for file changes in {Path.cwd() / self.path}...")
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
@@ -173,7 +173,7 @@ class Watcher:
 
     async def _preload(self):
         logger.info("Preloading...")
-        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.cogs_path).rglob("*.py")}:
+        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.path).rglob("*.py")}:
             new_dir = self.get_dotted_cog_path(cog[1])
             await self.load(".".join([new_dir, cog[0]]))
 
