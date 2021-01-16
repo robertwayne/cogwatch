@@ -12,19 +12,13 @@ def test_get_dotted_cog_path():
 
     # test the default path
     default_watcher = Watcher(c)
-    default_path = default_watcher.get_dotted_cog_path(
-        "E:\\Examples\\example_bot\\commands\\cmd.py"
-    )
+    default_path = default_watcher.get_dotted_cog_path("E:\\Examples\\example_bot\\commands\\cmd.py")
     posix_path = default_watcher.get_dotted_cog_path("/usr/example_bot/commands/cmd.py")
 
     # test a nested path with duplicate names
     options_watcher = Watcher(c, path="example_bot/commands")
-    nested_path = options_watcher.get_dotted_cog_path(
-        "E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py"
-    )
-    posix_nested_path = options_watcher.get_dotted_cog_path(
-        "/usr/example_bot/example_bot/commands/cmd.py"
-    )
+    nested_path = options_watcher.get_dotted_cog_path("E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py")
+    posix_nested_path = options_watcher.get_dotted_cog_path("/usr/example_bot/example_bot/commands/cmd.py")
 
     # test deeper nests
     options_watcher.cogs_path = "example_bot/even/deeper/commands"
@@ -52,16 +46,12 @@ def test_get_dotted_cog_path_input():
     # test invalid input backslash
     with pytest.raises(ValueError):
         default_watcher.cogs_path = "example_bot\\commands"
-        default_watcher.get_dotted_cog_path(
-            "E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py"
-        )
+        default_watcher.get_dotted_cog_path("E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py")
 
     # test invalid input dotted
     with pytest.raises(ValueError):
         default_watcher.cogs_path = "example_bot.commands"
-        default_watcher.get_dotted_cog_path(
-            "E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py"
-        )
+        default_watcher.get_dotted_cog_path("E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py")
 
 
 def test_get_cog_name():

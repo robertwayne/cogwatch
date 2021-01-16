@@ -64,9 +64,7 @@ class Watcher:
         try:
             root_index = rtokens.index(self.cogs_path.split("/")[0]) + 1
         except ValueError:
-            raise ValueError(
-                "Use forward-slash delimiter in your `cogs_path` parameter."
-            )
+            raise ValueError("Use forward-slash delimiter in your `cogs_path` parameter.")
 
         return ".".join([token for token in tokens[-root_index:-1]])
 
@@ -86,19 +84,13 @@ class Watcher:
                         filename = self.get_cog_name(change_path)
 
                         new_dir = self.get_dotted_cog_path(change_path)
-                        cog_dir = (
-                            f"{new_dir}.{filename.lower()}"
-                            if new_dir
-                            else f"{self.cogs_path}.{filename.lower()}"
-                        )
+                        cog_dir = f"{new_dir}.{filename.lower()}" if new_dir else f"{self.cogs_path}.{filename.lower()}"
 
                         if change_type == Change.deleted:
                             await self.unload(cog_dir)
                         elif change_type == Change.added:
                             await self.load(cog_dir)
-                        elif change_type == Change.modified and change_type != (
-                            Change.added or Change.deleted
-                        ):
+                        elif change_type == Change.modified and change_type != (Change.added or Change.deleted):
                             await self.reload(cog_dir)
 
             except FileNotFoundError:
@@ -141,9 +133,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logger.info(
-                    f"Watching for file changes in {Path.cwd() / self.cogs_path}..."
-                )
+                logger.info(f"Watching for file changes in {Path.cwd() / self.cogs_path}...")
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
@@ -183,10 +173,7 @@ class Watcher:
 
     async def _preload(self):
         logger.info("Preloading...")
-        for cog in {
-            (file.stem, file)
-            for file in Path(Path.cwd() / self.cogs_path).rglob("*.py")
-        }:
+        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.cogs_path).rglob("*.py")}:
             new_dir = self.get_dotted_cog_path(cog[1])
             await self.load(".".join([new_dir, cog[0]]))
 
