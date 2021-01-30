@@ -8,9 +8,6 @@ from pathlib import Path
 from discord.ext import commands
 from watchgod import Change, awatch
 
-logger = logging.getLogger("cogwatch")
-logger.addHandler(logging.NullHandler())
-
 
 class Watcher:
     """The core cogwatch class -- responsible for starting up watchers and managing cogs.
