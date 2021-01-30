@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cogwatch"
-version = "1.1.8"
+version = "2.0.0"
 description = "Automatic hot-reloading for your discord.py command files."
 authors = ["Rob Wagner <13954303+robertwayne@users.noreply.github.com>"]
 license = "MIT"
@@ -19,7 +19,7 @@ classifiers=[
 [tool.poetry.dependencies]
 python = "^3.7"
 "discord.py" = "^1.5"
-watchgod = "0.6"
+watchgod = "0.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"

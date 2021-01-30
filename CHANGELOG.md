@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0.0] -- 2021-15-01
+## [2.0.0] -- 2021-30-01
 
 ### Changed
 - **BREAKING**: The `cogs_path` parameter is now just `path`. This was done for simplicity and to
-  closer match the general convention of naming such an parameter.
+  closer match the general naming convention.
+- Updated `watchgod` dependency to latest version for performance improvements.
 
 ## [1.1.8] -- 2020-12-14
 
