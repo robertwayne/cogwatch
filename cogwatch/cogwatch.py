@@ -8,7 +8,7 @@ from pathlib import Path
 from discord.ext import commands
 from watchgod import Change, awatch
 
-logger = logging.getLogger('cogwatch')
+logger = logging.getLogger("cogwatch")
 logger.addHandler(logging.NullHandler())
 
 
@@ -17,17 +17,24 @@ class Watcher:
 
     Attributes
         :client: A discord Bot client.
-        :cogs_path: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
+        :path: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
         :debug: Whether to run the bot only when the debug flag is True. Defaults to True.
         :loop: Custom event loop. If not specified, will use the current running event loop.
         :default_logger: Whether to use the default logger (to sys.stdout) or not. Defaults to True.
         :preload: Whether to detect and load all found cogs on startup. Defaults to False.
     """
 
-    def __init__(self, client: commands.Bot, cogs_path: str = 'commands', debug: bool = True,
-                 loop: asyncio.BaseEventLoop = None, default_logger: bool = True, preload: bool = False):
+    def __init__(
+        self,
+        client: commands.Bot,
+        path: str = "commands",
+        debug: bool = True,
+        loop: asyncio.BaseEventLoop = None,
+        default_logger: bool = True,
+        preload: bool = False,
+    ):
         self.client = client
-        self.cogs_path = cogs_path
+        self.path = path
         self.debug = debug
         self.loop = loop
         self.default_logger = default_logger
@@ -37,7 +44,7 @@ class Watcher:
             _default = logging.getLogger(__name__)
             _default.setLevel(logging.INFO)
             _default_handler = logging.StreamHandler(sys.stdout)
-            _default_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
+            _default_handler.setFormatter(logging.Formatter("[%(name)s] %(message)s"))
             _default.addHandler(_default_handler)
 
     @staticmethod
@@ -52,21 +59,21 @@ class Watcher:
         tokens = _path.split(os.sep)
         rtokens = list(reversed(tokens))
 
-        # iterate over the list backwards in order to get the first occurence in cases where a duplicate
+        # iterate over the list backwards in order to get the first occurrence in cases where a duplicate
         # name exists in the path (ie. example_proj/example_proj/commands)
         try:
-            root_index = rtokens.index(self.cogs_path.split('/')[0]) + 1
+            root_index = rtokens.index(self.path.split("/")[0]) + 1
         except ValueError:
-            raise ValueError('Use forward-slash delimiter in your `cogs_path` parameter.')
+            raise ValueError("Use forward-slash delimiter in your `path` parameter.")
 
-        return '.'.join([token for token in tokens[-root_index:-1]])
+        return ".".join([token for token in tokens[-root_index:-1]])
 
     async def _start(self):
-        """Starts a watcher, monitoring for any file changes and dispatching event-related methods appropriatly."""
+        """Starts a watcher, monitoring for any file changes and dispatching event-related methods appropriately."""
         while self.dir_exists():
             try:
-                async for changes in awatch(Path.cwd() / self.cogs_path):
-                    self.validate_dir()  # cannot figure out how to validate within awatch; some anamolies but it does work...
+                async for changes in awatch(Path.cwd() / self.path):
+                    self.validate_dir()  # cannot figure out how to validate within awatch; some anomalies but it does work...
 
                     reverse_ordered_changes = sorted(changes, reverse=True)
 
@@ -77,7 +84,7 @@ class Watcher:
                         filename = self.get_cog_name(change_path)
 
                         new_dir = self.get_dotted_cog_path(change_path)
-                        cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.cogs_path}.{filename.lower()}'
+                        cog_dir = f"{new_dir}.{filename.lower()}" if new_dir else f"{self.path}.{filename.lower()}"
 
                         if change_type == Change.deleted:
                             await self.unload(cog_dir)
@@ -101,7 +108,7 @@ class Watcher:
 
     def dir_exists(self):
         """Predicate method for checking whether the specified dir exists."""
-        return Path(Path.cwd() / self.cogs_path).exists()
+        return Path(Path.cwd() / self.path).exists()
 
     def validate_dir(self):
         """Method for raising a FileNotFound error when the specified directory does not exist."""
@@ -114,11 +121,11 @@ class Watcher:
         _check = False
         while not self.dir_exists():
             if not _check:
-                logging.error(f'The path {Path.cwd() / self.cogs_path} does not exist.')
+                logging.error(f"The path {Path.cwd() / self.path} does not exist.")
                 _check = True
 
         else:
-            logging.info(f'Found {Path.cwd() / self.cogs_path}!')
+            logging.info(f"Found {Path.cwd() / self.path}!")
             if self.preload:
                 await self._preload()
 
@@ -126,7 +133,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logger.info(f'Watching for file changes in {Path.cwd() / self.cogs_path}...')
+                logger.info(f"Watching for file changes in {Path.cwd() / self.path}...")
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
@@ -138,7 +145,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logger.info(f'Cog Loaded: {cog_dir}')
+            logger.info(f"Cog Loaded: {cog_dir}")
 
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
@@ -147,7 +154,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logger.info(f'Cog Unloaded: {cog_dir}')
+            logger.info(f"Cog Unloaded: {cog_dir}")
 
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
@@ -156,7 +163,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logger.info(f'Cog Reloaded: {cog_dir}')
+            logger.info(f"Cog Reloaded: {cog_dir}")
 
     @staticmethod
     def cog_error(exc: Exception):
@@ -165,14 +172,15 @@ class Watcher:
             logger.exception(exc)
 
     async def _preload(self):
-        logger.info('Preloading...')
-        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.cogs_path).rglob('*.py')}:
+        logger.info("Preloading...")
+        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.path).rglob("*.py")}:
             new_dir = self.get_dotted_cog_path(cog[1])
-            await self.load('.'.join([new_dir, cog[0]]))
+            await self.load(".".join([new_dir, cog[0]]))
 
 
 def watch(**kwargs):
     """Instantiates a watcher by hooking into a Bot client methods' `self` attribute."""
+
     def decorator(function):
         @wraps(function)
         async def wrapper(client):
@@ -180,5 +188,7 @@ def watch(**kwargs):
             await cw.start()
             retval = await function(client)
             return retval
+
         return wrapper
+
     return decorator
