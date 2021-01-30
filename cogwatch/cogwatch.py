@@ -64,7 +64,7 @@ class Watcher:
         try:
             root_index = rtokens.index(self.path.split("/")[0]) + 1
         except ValueError:
-            raise ValueError("Use forward-slash delimiter in your `cogs_path` parameter.")
+            raise ValueError("Use forward-slash delimiter in your `path` parameter.")
 
         return ".".join([token for token in tokens[-root_index:-1]])
 
