@@ -55,8 +55,8 @@ class Watcher:
 
     def get_dotted_cog_path(self, path: str) -> str:
         """Returns the full dotted path that discord.py uses to load cog files."""
-        _path = os.path.normpath(path)
-        tokens = _path.split(os.sep)
+        os.path.normpath(path)
+        tokens = self.path.split(os.sep)
         rtokens = list(reversed(tokens))
 
         # iterate over the list backwards in order to get the first occurrence in cases where a duplicate
@@ -73,7 +73,7 @@ class Watcher:
         while self.dir_exists():
             try:
                 async for changes in awatch(Path.cwd() / self.path):
-                    self.validate_dir()  # cannot figure out how to validate within awatch; some anomalies but it does work...
+                    self.validate_dir()
 
                     reverse_ordered_changes = sorted(changes, reverse=True)
 
