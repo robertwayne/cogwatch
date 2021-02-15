@@ -21,7 +21,7 @@ yourself every time you edit an embed just to make sure it looks perfect!
 
 ### Features
 - Automatically reloads commands in real-time as you edit them *(no !reload <cmdName> needed)*.
-- Can handle the loading of all your commands on start-up *(no boilerplate for loading each cmd file yourself)*.
+- Can handle the loading of all your commands on start-up *(no boilerplate)*.
 
 ### Getting Started
 You can install the library with `pip install cogwatch`.
