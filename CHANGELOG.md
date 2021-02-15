@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] -- 2021-15-02
+
+### Added
+- The subclassed bot can now be run via a poetry script `poetry run example`.
+- The `examples` directory now includes a sample command directory & cog file to 
+  demonstrate the expected tree and code structure. (#9)
+- Added python-dotenv to dev-dependencies for passing in bot tokens to examples.
+
+
 ## [2.0.0] -- 2021-30-01
 
 ### Changed
