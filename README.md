@@ -28,6 +28,9 @@ You can install the library with `pip install cogwatch`.
 
 Import the `watch` decorator and apply it to your `on_ready` method and let the magic take effect.
 
+See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for more details,
+as well as an example on how to use the `cog` concept in `dpymenus` if you are unfamiliar with it.
+
 ```python
 import asyncio
 from discord.ext import commands
@@ -55,30 +58,6 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-```
-
-See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for complete implementations,
-as well as an example on how to use the `cog` concept in `dpymenus` if you are unfamiliar with it.
-
-#### Using a Classless Bot
-If you are using a classless bot you cannot use the decorator method and instead must manually create your watcher.
-
-```python
-from discord.ext import commands
-from cogwatch import Watcher
-
-client = commands.Bot(command_prefix='!')
-
-
-@client.event
-async def on_ready():
-    print('Bot ready.')
-
-    watcher = Watcher(client, path='commands')
-    await watcher.start()
-
-
-client.run('YOUR_TOKEN_GOES_HERE')
 ```
 
 ### Configuration
