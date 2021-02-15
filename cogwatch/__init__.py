@@ -6,7 +6,7 @@ __title__ = "cogwatch"
 __author__ = "Rob Wagner <rob@robwagner.dev>"
 __license__ = "MIT"
 __copyright__ = "Copyright 2020-2021 Rob Wagner"
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 import logging
 
