@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The subclassed bot can now be run via a poetry script `poetry run example`.
 - The `examples` directory now includes a sample command directory & cog file to 
   demonstrate the expected tree and code structure. (#9)
+  
+### Changed
+- Fixed a bug with the logger that was broken in v2.0.0.
 
 
 ## [2.0.0] -- 2021-30-01
