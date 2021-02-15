@@ -7,7 +7,7 @@ class Ping(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        await ctx.reply('Pong!')
+        await ctx.reply("Pong!")
 
 
 def setup(client):
