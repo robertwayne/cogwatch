@@ -15,11 +15,15 @@
 </div>
 <br>
 
-### Getting Started
 `cogwatch` is a utility that you can plug into your `discord.py` bot that will watch your command files directory *(cogs)* 
-and automatically reload them as you modify or move them around in real-time. No more manually reloading commands with 
-other commands, or *(worse yet)* restarting your bot, every time you edit that embed!
+and automatically reload them as you modify or move them around in real-time. No more reloading your bot / command 
+yourself every time you edit an embed just to make sure it looks perfect!
 
+### Features
+- Automatically reloads commands in real-time as you edit them *(no !reload <cmdName> needed)*.
+- Can handle the loading of all your commands on start-up *(no boilerplate for loading each cmd file yourself)*.
+
+### Getting Started
 You can install the library with `pip install cogwatch`.
 
 Import the `watch` decorator and apply it to your `on_ready` method and let the magic take effect.
@@ -53,10 +57,8 @@ if __name__ == '__main__':
     asyncio.run(main())
 ```
 
-**NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on Python. You can read more about that 
-[here](https://docs.python.org/3/library/constants.html). In short, unless you run Python with the *-O* flag from
-your command line, **\_\_debug\_\_** will be **True**. If you just want to bypass this feature, pass in `debug=False` and
-it won't matter if the flag is enabled or not.
+See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for complete implementations,
+as well as an example on how to use the `cog` concept in `dpymenus` if you are unfamiliar with it.
 
 #### Using a Classless Bot
 If you are using a classless bot you cannot use the decorator method and instead must manually create your watcher.
@@ -82,15 +84,20 @@ client.run('YOUR_TOKEN_GOES_HERE')
 ### Configuration
 You can pass any of these values to the decorator:
 
-**path='commands'**: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
+`path='commands'`: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
 
-**debug=True**: Whether to run the bot only when the Python **\_\_debug\_\_** flag is True. Defaults to True.
+`debug=True`: Whether to run the bot only when the Python **\_\_debug\_\_** flag is True. Defaults to True.
 
-**loop=None**: Custom event loop. Defaults to the current running event loop.
+`loop=None`: Custom event loop. Defaults to the current running event loop.
 
-**default_logger=True**: Whether to use the default logger *(to sys.stdout)* or not. Defaults to True.
+`default_logger=True`: Whether to use the default logger *(to sys.stdout)* or not. Defaults to True.
 
-**preload=False**: Whether to detect and load all found cogs on start. Defaults to False.
+`preload=False`: Whether to detect and load all found cogs on start. Defaults to False.
+
+**NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on Python. You can read more about that 
+[here](https://docs.python.org/3/library/constants.html). In short, unless you run Python with the *-O* flag from
+your command line, **\_\_debug\_\_** will be **True**. If you just want to bypass this feature, pass in `debug=False` and
+it won't matter if the flag is enabled or not.
 
 ### Logging
 By default, the utility has a logger configured so users can get output to the console. You can disable this by
