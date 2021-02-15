@@ -1,15 +1,8 @@
 import asyncio
-import os
 
 from discord.ext import commands
 
 from cogwatch import watch
-
-# This let's us easily load our bot token from a .env
-# file in the root directory so it is never exposed.
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 class ExampleBot(commands.Bot):
@@ -29,13 +22,7 @@ class ExampleBot(commands.Bot):
 
 async def main():
     client = ExampleBot()
-    await client.start(os.getenv("COGWATCH_BOT_TOKEN"))
-
-
-# This function is specifically for running from a poetry script.
-# You do not need this in your own bot, you can remove these 2 lines.
-def __poetry_run():
-    asyncio.run(main())
+    await client.start("YOUR_TOKEN_GOES_HERE")
 
 
 if __name__ == "__main__":
