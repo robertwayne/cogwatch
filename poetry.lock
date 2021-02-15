@@ -279,6 +279,19 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "uvloop"
+version = "0.15.1"
+description = "Fast implementation of asyncio event loop on top of libuv"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.extras]
+dev = ["Cython (>=0.29.20,<0.30.0)", "pytest (>=3.6.0)", "Sphinx (>=1.7.3,<1.8.0)", "sphinxcontrib-asyncio (>=0.2.0,<0.3.0)", "sphinx-rtd-theme (>=0.2.4,<0.3.0)", "aiohttp", "flake8 (>=3.8.4,<3.9.0)", "psutil", "pycodestyle (>=2.6.0,<2.7.0)", "pyOpenSSL (>=19.0.0,<19.1.0)", "mypy (>=0.800)"]
+docs = ["Sphinx (>=1.7.3,<1.8.0)", "sphinxcontrib-asyncio (>=0.2.0,<0.3.0)", "sphinx-rtd-theme (>=0.2.4,<0.3.0)"]
+test = ["aiohttp", "flake8 (>=3.8.4,<3.9.0)", "psutil", "pycodestyle (>=2.6.0,<2.7.0)", "pyOpenSSL (>=19.0.0,<19.1.0)", "mypy (>=0.800)"]
+
+[[package]]
 name = "watchgod"
 version = "0.7"
 description = "Simple, modern file watching and code reload in python."
@@ -314,7 +327,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "29b25bb51d87d7dbd623edfef25efd9b08d3a7b25689e6f9c86323a2ebed1706"
+content-hash = "7ba217edc3c47fbf1c6110db6ed1766962a27b121d2aa57099f2c7dadc3b2625"
 
 [metadata.files]
 aiohttp = [
@@ -557,6 +570,18 @@ typing-extensions = [
     {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
     {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
     {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
+]
+uvloop = [
+    {file = "uvloop-0.15.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:9541dc3f391941796ae95c9c3bb16b813acf9e3d4beebfd3b623f1acb22d318d"},
+    {file = "uvloop-0.15.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:e178c255622d928d464187e3ceba94db88465f6b17909c651483fb73af8d8b85"},
+    {file = "uvloop-0.15.1-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:47ec567151070ed770211d359ad9250b59368548c60212c7ef6dda3f5b1778f6"},
+    {file = "uvloop-0.15.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:66881fe8a2187334c4dd5010c56310bdf32fe426613f9ca727f090bc31280624"},
+    {file = "uvloop-0.15.1-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:e72779681f839b6a069d7e7a9f7962a1d1927612c5c2e33071415478bdc1b91b"},
+    {file = "uvloop-0.15.1-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:ed073d24e0c383c24d17d3a2bb209b999ff0a8130e89b7c3f033db9e0c3bd04f"},
+    {file = "uvloop-0.15.1-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:236a3c31096e0845029856f7bc07a938340c2cdb35d9d39b38c9253b672bf948"},
+    {file = "uvloop-0.15.1-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:ca8a9e982f0bfbe331f41902cdd721c6e749e4685a403685e792b86a584f5969"},
+    {file = "uvloop-0.15.1-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:1ae1ad731c8c0dcee80e0ecf06274f0f7293244d2cef81fa2747321a370a6aba"},
+    {file = "uvloop-0.15.1.tar.gz", hash = "sha256:7846828112bfb49abc5fdfc47d0e4dfd7402115c9fde3c14c31818cfbeeb63dc"},
 ]
 watchgod = [
     {file = "watchgod-0.7-py3-none-any.whl", hash = "sha256:d6c1ea21df37847ac0537ca0d6c2f4cdf513562e95f77bb93abbcf05573407b7"},
