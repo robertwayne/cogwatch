@@ -8,9 +8,6 @@ from pathlib import Path
 from discord.ext import commands
 from watchgod import Change, awatch
 
-logger = logging.getLogger("cogwatch")
-logger.addHandler(logging.NullHandler())
-
 
 class Watcher:
     """The core cogwatch class -- responsible for starting up watchers and managing cogs.
@@ -133,7 +130,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logger.info(f"Watching for file changes in {Path.cwd() / self.path}...")
+                logging.info(f"Watching for file changes in {Path.cwd() / self.path}...")
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
@@ -145,7 +142,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logger.info(f"Cog Loaded: {cog_dir}")
+            logging.info(f"Cog Loaded: {cog_dir}")
 
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
@@ -154,7 +151,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logger.info(f"Cog Unloaded: {cog_dir}")
+            logging.info(f"Cog Unloaded: {cog_dir}")
 
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
@@ -163,16 +160,16 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logger.info(f"Cog Reloaded: {cog_dir}")
+            logging.info(f"Cog Reloaded: {cog_dir}")
 
     @staticmethod
     def cog_error(exc: Exception):
         """Logs exceptions. TODO: Need thorough exception handling."""
         if isinstance(exc, (commands.ExtensionError, SyntaxError)):
-            logger.exception(exc)
+            logging.exception(exc)
 
     async def _preload(self):
-        logger.info("Preloading...")
+        logging.info("Preloading...")
         for cog in {(file.stem, file) for file in Path(Path.cwd() / self.path).rglob("*.py")}:
             new_dir = self.get_dotted_cog_path(cog[1])
             await self.load(".".join([new_dir, cog[0]]))
