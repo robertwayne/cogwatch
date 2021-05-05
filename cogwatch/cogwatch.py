@@ -54,12 +54,12 @@ class Watcher:
         """Returns the full dotted path that discord.py uses to load cog files."""
         _path = os.path.normpath(path)
         tokens = _path.split(os.sep)
-        rtokens = list(reversed(tokens))
+        reversed_tokens = list(reversed(tokens))
 
         # iterate over the list backwards in order to get the first occurrence in cases where a duplicate
         # name exists in the path (ie. example_proj/example_proj/commands)
         try:
-            root_index = rtokens.index(self.path.split("/")[0]) + 1
+            root_index = reversed_tokens.index(self.path.split("/")[0]) + 1
         except ValueError:
             raise ValueError("Use forward-slash delimiter in your `path` parameter.")
 
@@ -70,7 +70,7 @@ class Watcher:
         while self.dir_exists():
             try:
                 async for changes in awatch(Path.cwd() / self.path):
-                    self.validate_dir()  # cannot figure out how to validate within awatch; some anomalies but it does work...
+                    self.validate_dir()
 
                     reverse_ordered_changes = sorted(changes, reverse=True)
 
@@ -177,15 +177,12 @@ class Watcher:
 
 def watch(**kwargs):
     """Instantiates a watcher by hooking into a Bot client methods' `self` attribute."""
-
     def decorator(function):
         @wraps(function)
         async def wrapper(client):
             cw = Watcher(client, **kwargs)
             await cw.start()
-            retval = await function(client)
-            return retval
-
+            ret_val = await function(client)
+            return ret_val
         return wrapper
-
     return decorator

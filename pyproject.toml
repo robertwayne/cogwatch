@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "cogwatch"
-version = "2.1.0"
-description = "Automatic hot-reloading for your discord.py command files."
-authors = ["Rob Wagner <13954303+robertwayne@users.noreply.github.com>"]
-license = "MIT"
+name = 'cogwatch'
+version = '2.1.0'
+description = 'Automatic hot-reloading for your discord.py command files.'
+authors = ['Rob Wagner <13954303+robertwayne@users.noreply.github.com>']
+license = 'MIT'
 readme = 'README.md'
 homepage = 'https://github.com/robertwayne/cogwatch'
 repository = 'https://github.com/robertwayne/cogwatch'
@@ -18,20 +18,22 @@ classifiers=[
 
 [tool.poetry.scripts]
 example = 'runner:__poetry_run'
+fmt = 'scripts:fmt'
 
 [tool.poetry.dependencies]
-python = "^3.7"
-"discord.py" = "^1.5"
-watchgod = "0.7"
+python = '^3.7'
+'discord.py' = '^1.7'
+watchgod = '0.7'
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.1"
-black = "^20.8b1"
-python-dotenv = '^0.15'
-uvloop = "^0.15.1"
+pytest = '^6.1'
+black = '^21.5b0'
+python-dotenv = '^0.17'
+uvloop = '^0.15.1'
 
 [tool.black]
 line-length = 120
+skip-string-normalization = 1
 target-version = ['py37']
 exclude = '''
 
@@ -55,5 +57,5 @@ exclude = '''
 '''
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ['poetry-core>=1.0.0']
+build-backend = 'poetry.core.masonry.api'
