@@ -24,7 +24,7 @@ class Watcher:
     def __init__(
         self,
         client: commands.Bot,
-        path: str = "commands",
+        path: str = 'commands',
         debug: bool = True,
         loop: asyncio.BaseEventLoop = None,
         default_logger: bool = True,
@@ -41,7 +41,7 @@ class Watcher:
             _default = logging.getLogger(__name__)
             _default.setLevel(logging.INFO)
             _default_handler = logging.StreamHandler(sys.stdout)
-            _default_handler.setFormatter(logging.Formatter("[%(name)s] %(message)s"))
+            _default_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
             _default.addHandler(_default_handler)
 
     @staticmethod
@@ -59,11 +59,11 @@ class Watcher:
         # iterate over the list backwards in order to get the first occurrence in cases where a duplicate
         # name exists in the path (ie. example_proj/example_proj/commands)
         try:
-            root_index = reversed_tokens.index(self.path.split("/")[0]) + 1
+            root_index = reversed_tokens.index(self.path.split('/')[0]) + 1
         except ValueError:
-            raise ValueError("Use forward-slash delimiter in your `path` parameter.")
+            raise ValueError('Use forward-slash delimiter in your `path` parameter.')
 
-        return ".".join([token for token in tokens[-root_index:-1]])
+        return '.'.join([token for token in tokens[-root_index:-1]])
 
     async def _start(self):
         """Starts a watcher, monitoring for any file changes and dispatching event-related methods appropriately."""
@@ -81,7 +81,7 @@ class Watcher:
                         filename = self.get_cog_name(change_path)
 
                         new_dir = self.get_dotted_cog_path(change_path)
-                        cog_dir = f"{new_dir}.{filename.lower()}" if new_dir else f"{self.path}.{filename.lower()}"
+                        cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.path}.{filename.lower()}'
 
                         if change_type == Change.deleted:
                             await self.unload(cog_dir)
@@ -118,11 +118,11 @@ class Watcher:
         _check = False
         while not self.dir_exists():
             if not _check:
-                logging.error(f"The path {Path.cwd() / self.path} does not exist.")
+                logging.error(f'The path {Path.cwd() / self.path} does not exist.')
                 _check = True
 
         else:
-            logging.info(f"Found {Path.cwd() / self.path}!")
+            logging.info(f'Found {Path.cwd() / self.path}!')
             if self.preload:
                 await self._preload()
 
@@ -130,7 +130,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logging.info(f"Watching for file changes in {Path.cwd() / self.path}...")
+                logging.info(f'Watching for file changes in {Path.cwd() / self.path}...')
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
@@ -142,7 +142,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f"Cog Loaded: {cog_dir}")
+            logging.info(f'Cog Loaded: {cog_dir}')
 
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
@@ -151,7 +151,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f"Cog Unloaded: {cog_dir}")
+            logging.info(f'Cog Unloaded: {cog_dir}')
 
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
@@ -160,7 +160,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f"Cog Reloaded: {cog_dir}")
+            logging.info(f'Cog Reloaded: {cog_dir}')
 
     @staticmethod
     def cog_error(exc: Exception):
@@ -169,10 +169,10 @@ class Watcher:
             logging.exception(exc)
 
     async def _preload(self):
-        logging.info("Preloading...")
-        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.path).rglob("*.py")}:
+        logging.info('Preloading...')
+        for cog in {(file.stem, file) for file in Path(Path.cwd() / self.path).rglob('*.py')}:
             new_dir = self.get_dotted_cog_path(cog[1])
-            await self.load(".".join([new_dir, cog[0]]))
+            await self.load('.'.join([new_dir, cog[0]]))
 
 
 def watch(**kwargs):
