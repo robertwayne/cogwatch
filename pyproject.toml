@@ -27,9 +27,8 @@ watchgod = '0.7'
 
 [tool.poetry.dev-dependencies]
 pytest = '^6.1'
-black = '^21.5b0'
+black = '^21.5b1'
 python-dotenv = '^0.17'
-uvloop = '^0.15.1'
 
 [tool.black]
 line-length = 120
