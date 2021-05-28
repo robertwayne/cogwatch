@@ -48,7 +48,7 @@ class Watcher:
             _default = logging.getLogger(__name__)
             _default.setLevel(logging.INFO)
             _default_handler = logging.StreamHandler(sys.stdout)
-            _default_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
+            _default_handler.setFormatter(logging.Formatter('%(message)s'))
             _default.addHandler(_default_handler)
 
     @staticmethod
@@ -137,7 +137,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logging.info(f'Watching for file changes in {Path.cwd() / self.path}...')
+                logging.info(f'Watching for file changes in {CBOLD}{Path.cwd() / self.path}{CEND}...')
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
