@@ -8,10 +8,6 @@ from pathlib import Path
 from discord.ext import commands
 from watchgod import Change, awatch
 
-CEND   = '\33[0m'
-CBOLD  = '\33[1m'
-CGREEN = '\33[32m'
-CRED   = '\33[31m'
 
 class Watcher:
     """The core cogwatch class -- responsible for starting up watchers and managing cogs.
@@ -43,6 +39,14 @@ class Watcher:
         self.default_logger = default_logger
         self.preload = preload
         self.colors = colors
+
+        if self.colors:
+            self.CEND = '\33[0m'
+            self.CBOLD = '\33[1m'
+            self.CGREEN = '\33[32m'
+            self.CRED = '\33[31m'
+        else:
+            self.CEND, self.CBOLD, self.CGREEN, self.CRED = '', '', '', ''
 
         if default_logger:
             _default = logging.getLogger(__name__)
@@ -125,11 +129,11 @@ class Watcher:
         _check = False
         while not self.dir_exists():
             if not _check:
-                logging.error(f'The path {CBOLD}{Path.cwd() / self.path}{CEND} does not exist.')
+                logging.error(f'The path {self.CBOLD}{Path.cwd() / self.path}{self.CEND} does not exist.')
                 _check = True
 
         else:
-            logging.info(f'Found {CBOLD}{Path.cwd() / self.path}{CEND}!')
+            logging.info(f'Found {self.CBOLD}{Path.cwd() / self.path}{self.CEND}!')
             if self.preload:
                 await self._preload()
 
@@ -137,7 +141,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logging.info(f'Watching for file changes in {CBOLD}{Path.cwd() / self.path}{CEND}...')
+                logging.info(f'Watching for file changes in {self.CBOLD}{Path.cwd() / self.path}{self.CEND}...')
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
@@ -149,7 +153,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f'{CBOLD}{CGREEN}[Cog Loaded]{CEND} {cog_dir}')
+            logging.info(f'{self.CBOLD}{self.CGREEN}[Cog Loaded]{self.CEND} {cog_dir}')
 
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
@@ -158,7 +162,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f'{CBOLD}{CRED}[Cog Unloaded]{CEND} {cog_dir}')
+            logging.info(f'{self.CBOLD}{self.CRED}[Cog Unloaded]{self.CEND} {cog_dir}')
 
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
@@ -167,7 +171,7 @@ class Watcher:
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f'{CBOLD}{CGREEN}[Cog Reloaded]{CEND} {cog_dir}')
+            logging.info(f'{self.CBOLD}{self.CGREEN}[Cog Reloaded]{self.CEND} {cog_dir}')
 
     @staticmethod
     def cog_error(exc: Exception):
