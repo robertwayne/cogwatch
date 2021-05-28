@@ -65,13 +65,15 @@ You can pass any of these values to the decorator:
 
 `path='commands'`: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
 
-`debug=True`: Whether to run the bot only when the Python **\_\_debug\_\_** flag is True. Defaults to True.
+`debug`: Whether to run the bot only when the Python **\_\_debug\_\_** flag is True. Defaults to True.
 
-`loop=None`: Custom event loop. Defaults to the current running event loop.
+`loop`: Custom event loop. Defaults to the current running event loop.
 
-`default_logger=True`: Whether to use the default logger *(to sys.stdout)* or not. Defaults to True.
+`default_logger`: Whether to use the default logger *(to sys.stdout)* or not. Defaults to True.
 
-`preload=False`: Whether to detect and load all found cogs on start. Defaults to False.
+`preload`: Whether to detect and load all found cogs on start. Defaults to False.
+
+`colors`: Whether to use colorized terminal outputs or not. Defaults to True.
 
 **NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on Python. You can read more about that 
 [here](https://docs.python.org/3/library/constants.html). In short, unless you run Python with the *-O* flag from
