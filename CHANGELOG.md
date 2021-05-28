@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] -- 2021-27-05
+
+This release drops support for Python 3.7.
+
+### Added
+
+- Terminal output now supports colorized messages.
+- New arguments `colors` can be used to disable it.
+
 ## [2.1.0] -- 2021-15-02
 
 ### Added

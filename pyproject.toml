@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'cogwatch'
-version = '2.1.0'
+version = '3.0.0'
 description = 'Automatic hot-reloading for your discord.py command files.'
 authors = ['Rob Wagner <13954303+robertwayne@users.noreply.github.com>']
 license = 'MIT'
@@ -21,8 +21,8 @@ example = 'runner:__poetry_run'
 fmt = 'scripts:fmt'
 
 [tool.poetry.dependencies]
-python = '^3.7'
-'discord.py' = '^1.7'
+python = '^3.8'
+'discord.py' = { git = 'https://github.com/Rapptz/discord.py.git' }
 watchgod = '0.7'
 
 [tool.poetry.dev-dependencies]
@@ -33,7 +33,7 @@ python-dotenv = '^0.17'
 [tool.black]
 line-length = 120
 skip-string-normalization = 1
-target-version = ['py37']
+target-version = ['py38']
 exclude = '''
 
 (
