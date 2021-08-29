@@ -1,4 +1,11 @@
 <h1 align="center">Cog Watch</h1>
+
+<div align="center">
+    <strong>With the recent news that `discord.py` will no longer be mainainted, as well as my own bot being moved over to Rust w/ Twilight for several months now, this project will no longer be maintained.</strong>
+</div>
+
+  <br>
+  <br>
     
 <div align="center">
   <strong><i>Automatic hot-reloading for your discord.py command files.</i></strong>
