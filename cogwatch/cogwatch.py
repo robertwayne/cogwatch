@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import os
-import sys
 from functools import wraps
 from pathlib import Path
 
@@ -49,11 +48,9 @@ class Watcher:
             self.CEND, self.CBOLD, self.CGREEN, self.CRED = '', '', '', ''
 
         if default_logger:
-            _default = logging.getLogger(__name__)
-            _default.setLevel(logging.INFO)
-            _default_handler = logging.StreamHandler(sys.stdout)
-            _default_handler.setFormatter(logging.Formatter('%(message)s'))
-            _default.addHandler(_default_handler)
+            logging.basicConfig(
+                level=logging.INFO,
+            )
 
     @staticmethod
     def get_cog_name(path: str) -> str:
