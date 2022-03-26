@@ -177,7 +177,7 @@ class Watcher:
             logging.exception(exc)
 
     async def _preload(self):
-        logging.info('Preloading...')
+        logging.info('Preloading cogs...')
         for cog in {(file.stem, file) for file in Path(Path.cwd() / self.path).rglob('*.py')}:
             new_dir = self.get_dotted_cog_path(cog[1])
             await self.load('.'.join([new_dir, cog[0]]))
@@ -185,6 +185,7 @@ class Watcher:
 
 def watch(**kwargs):
     """Instantiates a watcher by hooking into a Bot client methods' `self` attribute."""
+
     def decorator(function):
         @wraps(function)
         async def wrapper(client):
@@ -192,5 +193,7 @@ def watch(**kwargs):
             await cw.start()
             ret_val = await function(client)
             return ret_val
+
         return wrapper
+
     return decorator
