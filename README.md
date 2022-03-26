@@ -15,21 +15,25 @@
 </div>
 <br>
 
-`cogwatch` is a utility that you can plug into your `discord.py` bot that will watch your command files directory *(cogs)* 
-and automatically reload them as you modify or move them around in real-time. No more reloading your bot / command 
-yourself every time you edit an embed just to make sure it looks perfect!
+`cogwatch` is a utility that you can plug into your `discord.py` bot that will watch your command
+files directory *(cogs)* and automatically reload them as you modify or move them around in
+real-time. No more reloading your bot / command yourself every time you edit an embed just to make
+sure it looks perfect!
 
-### Features
+## Features
+
 - Automatically reloads commands in real-time as you edit them *(no !reload <cmdName> needed)*.
 - Can handle the loading of all your commands on start-up *(no boilerplate)*.
 
-### Getting Started
+## Getting Started
+
 You can install the library with `pip install cogwatch`.
 
 Import the `watch` decorator and apply it to your `on_ready` method and let the magic take effect.
 
-See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for more details,
-as well as an example on how to use the `cog` concept in `dpymenus` if you are unfamiliar with it.
+See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for more
+details, as well as an example on how to use the `cog` concept in `dpymenus` if you are unfamiliar
+with it.
 
 ```python
 import asyncio
@@ -60,7 +64,8 @@ if __name__ == '__main__':
     asyncio.run(main())
 ```
 
-### Configuration
+## Configuration
+
 You can pass any of these values to the decorator:
 
 `path='commands'`: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
@@ -75,15 +80,17 @@ You can pass any of these values to the decorator:
 
 `colors`: Whether to use colorized terminal outputs or not. Defaults to True.
 
-**NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on Python. You can read more about that 
-[here](https://docs.python.org/3/library/constants.html). In short, unless you run Python with the *-O* flag from
-your command line, **\_\_debug\_\_** will be **True**. If you just want to bypass this feature, pass in `debug=False` and
-it won't matter if the flag is enabled or not.
+**NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on Python. You can read more
+about that [here](https://docs.python.org/3/library/constants.html). In short, unless you run Python
+with the *-O* flag from your command line, **\_\_debug\_\_** will be **True**. If you just want to
+bypass this feature, pass in `debug=False` and it won't matter if the flag is enabled or not.
 
-### Logging
-By default, the utility has a logger configured so users can get output to the console. You can disable this by
-passing in `default_logger=False`. If you want to hook into the logger -- for example, to pipe your output to another
-terminal or `tail` a file -- you can set up a custom logger like so:
+## Logging
+
+By default, the utility has a logger configured so users can get output to the console. You can
+disable this by passing in `default_logger=False`. If you want to hook into the logger -- for
+example, to pipe your output to another terminal or `tail` a file -- you can set up a custom logger
+like so:
 
 ```python
 import logging
@@ -95,7 +102,3 @@ watch_handler = logging.StreamHandler(sys.stdout)
 watch_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
 watch_log.addHandler(watch_handler)
 ```
-
------
-
-Check out my other discord.py utility: **[dpymenus](https://github.com/robertwayne/dpymenus)** -- *Simplified menus for discord.py developers.*
