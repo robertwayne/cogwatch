@@ -8,12 +8,12 @@ readme = 'README.md'
 homepage = 'https://github.com/robertwayne/cogwatch'
 repository = 'https://github.com/robertwayne/cogwatch'
 keywords = ['discord.py', 'discord bot', 'cogs', 'hot-reload']
-classifiers=[
-    'Operating System :: OS Independent',
-    'Typing :: Typed',
-    'Topic :: Communications :: Chat',
-    'Intended Audience :: Developers',
-    'Development Status :: 5 - Production/Stable',
+classifiers = [
+  'Operating System :: OS Independent',
+  'Typing :: Typed',
+  'Topic :: Communications :: Chat',
+  'Intended Audience :: Developers',
+  'Development Status :: 5 - Production/Stable',
 ]
 
 [tool.poetry.scripts]
@@ -22,13 +22,13 @@ fmt = 'scripts:fmt'
 
 [tool.poetry.dependencies]
 python = '^3.8'
-'discord.py' = { git = 'https://github.com/Rapptz/discord.py.git' }
-watchgod = '0.7'
+'discord.py' = '1.7.3'
+watchgod = "^0.8.1"
 
 [tool.poetry.dev-dependencies]
-pytest = '^6.1'
-black = '^21.5b1'
-python-dotenv = '^0.17'
+pytest = '^7.1'
+black = '^22.1'
+python-dotenv = "^0.20.0"
 
 [tool.black]
 line-length = 120
