@@ -1,5 +1,4 @@
 import pytest
-
 from cogwatch import Watcher
 
 
@@ -33,13 +32,13 @@ def test_get_dotted_cog_path_input():
 
     # test invalid input backslash
     with pytest.raises(ValueError):
-        default_watcher.path = r'example_bot\commands'
-        default_watcher.get_dotted_cog_path(r'E:\Examples\example_bot\example_bot\commands\cmd.py')
+        default_watcher.path = r'example_bot\\commands'
+        default_watcher.get_dotted_cog_path(r'E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py')
 
     # test invalid input dotted
     with pytest.raises(ValueError):
         default_watcher.path = 'example_bot.commands'
-        default_watcher.get_dotted_cog_path(r'E:\Examples\example_bot\example_bot\commands\cmd.py')
+        default_watcher.get_dotted_cog_path(r'E:\\Examples\\example_bot\\example_bot\\commands\\cmd.py')
 
 
 def test_get_cog_name():
