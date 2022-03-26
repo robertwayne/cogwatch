@@ -89,7 +89,7 @@ class Watcher:
                         filename = self.get_cog_name(change_path)
 
                         new_dir = self.get_dotted_cog_path(change_path)
-                        cog_dir = f'{new_dir}.{filename.lower()}' if new_dir else f'{self.path}.{filename.lower()}'
+                        cog_dir = f'{new_dir}.{filename}' if new_dir else f'{self.path}.{filename}'
 
                         if change_type == Change.deleted:
                             await self.unload(cog_dir)
