@@ -7,11 +7,11 @@
 import asyncio
 import logging
 import os
-import sys
 
-from cogwatch import watch
 from discord.ext import commands
 from dotenv import load_dotenv
+
+from cogwatch import Watcher, watch
 
 load_dotenv()
 
