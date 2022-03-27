@@ -92,11 +92,16 @@ class Watcher:
                         cog_dir = f'{new_dir}.{filename}' if new_dir else f'{self.path}.{filename}'
 
                         if change_type == Change.deleted:
-                            await self.unload(cog_dir)
+                            if cog_dir in self.client.extensions:
+                                await self.unload(cog_dir)
                         elif change_type == Change.added:
-                            await self.load(cog_dir)
+                            if cog_dir not in self.client.extensions:
+                                await self.load(cog_dir)
                         elif change_type == Change.modified and change_type != (Change.added or Change.deleted):
-                            await self.reload(cog_dir)
+                            if cog_dir in self.client.extensions:
+                                await self.reload(cog_dir)
+                            else:
+                                await self.load(cog_dir)
 
             except FileNotFoundError:
                 continue
