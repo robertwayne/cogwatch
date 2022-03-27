@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.0.0] -- 2021-27-05
+## [3.0.0] -- 2022-27-03
 
 This release drops support for Python 3.7.
 
