@@ -10,8 +10,8 @@ This release drops support for Python 3.7.
 
 ### Added
 
-- Terminal output now supports colorized messages.
-- New argument `colors` can be used to disable it.
+- Terminal output now supports colorized messages. The argument `colors` can be used to disable it.
+- Explicit error messages for certain actions (NoEntryPoint, ExtensionNotLoaded).
 
 ### Changed
 - Fixed a bug where filenames with mixed case would fail. (#14)
