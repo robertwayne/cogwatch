@@ -151,7 +151,9 @@ class Watcher:
         try:
             self.client.load_extension(cog_dir)
         except commands.ExtensionAlreadyLoaded:
-            return
+            logging.info(f'Cannot reload {cog_dir} because it is not loaded.')
+        except commands.NoEntryPointError:
+            logging.info(f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to load {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.')
         except Exception as exc:
             self.cog_error(exc)
         else:
@@ -161,6 +163,8 @@ class Watcher:
         """Unloads a cog file into the client."""
         try:
             self.client.unload_extension(cog_dir)
+        except commands.ExtensionNotLoaded:
+            logging.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
             self.cog_error(exc)
         else:
@@ -170,6 +174,10 @@ class Watcher:
         """Attempts to atomically reload the file into the client."""
         try:
             self.client.reload_extension(cog_dir)
+        except commands.NoEntryPointError:
+            logging.info(f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to reload {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.')
+        except commands.ExtensionNotLoaded:
+            logging.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
             self.cog_error(exc)
         else:
