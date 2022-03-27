@@ -11,7 +11,11 @@ This release drops support for Python 3.7.
 ### Added
 
 - Terminal output now supports colorized messages.
-- New arguments `colors` can be used to disable it.
+- New argument `colors` can be used to disable it.
+
+### Changed
+- Fixed a bug where filenames with mixed case would fail. (#14)
+- Added explicit checks before loading or unloading cogs. (#15)
 
 ## [2.1.0] -- 2021-15-02
 
