@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED] -- 2022-25-06
+
+## [3.0.0] -- 2022-25-06
+
+This release drops support for Python 3.7.
+
+### Added
+
+- Terminal output now supports colorized messages. The argument `colors` can be used to disable it.
+- Explicit error messages for certain actions (NoEntryPoint, ExtensionNotLoaded).
+
+### Changed
+- Fixed a bug where filenames with mixed case would fail. (#14)
+- Added explicit checks before loading or unloading cogs. (#15)
+
 ## [2.1.0] -- 2021-15-02
 
 ### Added
