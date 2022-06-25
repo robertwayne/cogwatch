@@ -23,7 +23,7 @@ fmt = 'scripts:fmt'
 [tool.poetry.dependencies]
 python = '^3.8'
 'discord.py' = '1.7.3'
-watchgod = "^0.8.1"
+watchfiles = "^0.15"
 
 [tool.poetry.dev-dependencies]
 pytest = '^7.1'
