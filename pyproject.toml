@@ -27,7 +27,7 @@ watchfiles = "^0.15"
 
 [tool.poetry.dev-dependencies]
 pytest = '^7.1'
-black = '^22.1'
+black = '^22.3'
 python-dotenv = "^0.20.0"
 
 [tool.black]
