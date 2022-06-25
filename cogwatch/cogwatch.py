@@ -1,11 +1,18 @@
 import asyncio
 import logging
 import os
+import sys
 from functools import wraps
 from pathlib import Path
 
 from discord.ext import commands
 from watchfiles import Change, awatch
+
+print(__name__)
+logger = logging.getLogger('cogwatch')
+logger.addHandler(logging.NullHandler())
+# prevents log events bubbling up to the parent and duplicating output
+logger.propagate = False
 
 
 class Watcher:
@@ -13,12 +20,18 @@ class Watcher:
 
     Attributes
         :client: A discord Bot client.
-        :path: Root name of the cogs directory; cogwatch will only watch within this directory -- recursively.
-        :debug: Whether to run the bot only when the debug flag is True. Defaults to True.
-        :loop: Custom event loop. If not specified, will use the current running event loop.
-        :default_logger: Whether to use the default logger (to sys.stdout) or not. Defaults to True.
-        :preload: Whether to detect and load all found cogs on startup. Defaults to False.
-        :colors: Whether to use colorized terminal outputs or not. Defaults to True.
+        :path: Root name of the cogs directory; cogwatch will only watch within
+        this directory -- recursively.
+        :debug: Whether to run the bot only when the debug flag is True.
+        Defaults to True.
+        :loop: Custom event loop. If not specified, will use the current running
+        event loop.
+        :default_logger: Whether to use the default logger (to sys.stdout) or
+        not. Defaults to True.
+        :preload: Whether to detect and load all found cogs on startup. Defaults
+        to False.
+        :colors: Whether to use colorized terminal outputs or not. Defaults to
+        True.
     """
 
     def __init__(
@@ -48,9 +61,11 @@ class Watcher:
             self.CEND, self.CBOLD, self.CGREEN, self.CRED = '', '', '', ''
 
         if default_logger:
-            logging.basicConfig(
-                level=logging.INFO,
-            )
+            watch_log = logging.getLogger('cogwatch')
+            watch_log.setLevel(logging.INFO)
+            watch_handler = logging.StreamHandler(sys.stdout)
+            watch_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
+            watch_log.addHandler(watch_handler)
 
     @staticmethod
     def get_cog_name(path: str) -> str:
@@ -131,11 +146,11 @@ class Watcher:
         _check = False
         while not self.dir_exists():
             if not _check:
-                logging.error(f'The path {self.CBOLD}{Path.cwd() / self.path}{self.CEND} does not exist.')
+                logger.error(f'The path {self.CBOLD}{Path.cwd() / self.path}{self.CEND} does not exist.')
                 _check = True
 
         else:
-            logging.info(f'Found {self.CBOLD}{Path.cwd() / self.path}{self.CEND}!')
+            logger.info(f'Found {self.CBOLD}{Path.cwd() / self.path}{self.CEND}!')
             if self.preload:
                 await self._preload()
 
@@ -143,7 +158,7 @@ class Watcher:
                 if self.loop is None:
                     self.loop = asyncio.get_event_loop()
 
-                logging.info(f'Watching for file changes in {self.CBOLD}{Path.cwd() / self.path}{self.CEND}...')
+                logger.info(f'Watching for file changes in {self.CBOLD}{Path.cwd() / self.path}{self.CEND}...')
                 self.loop.create_task(self._start())
 
     async def load(self, cog_dir: str):
@@ -151,41 +166,41 @@ class Watcher:
         try:
             self.client.load_extension(cog_dir)
         except commands.ExtensionAlreadyLoaded:
-            logging.info(f'Cannot reload {cog_dir} because it is not loaded.')
+            logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except commands.NoEntryPointError:
-            logging.info(
+            logger.info(
                 f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to load {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.'
             )
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f'{self.CBOLD}{self.CGREEN}[Cog Loaded]{self.CEND} {cog_dir}')
+            logger.info(f'{self.CBOLD}{self.CGREEN}[Cog Loaded]{self.CEND} {cog_dir}')
 
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
         try:
             self.client.unload_extension(cog_dir)
         except commands.ExtensionNotLoaded:
-            logging.info(f'Cannot reload {cog_dir} because it is not loaded.')
+            logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f'{self.CBOLD}{self.CRED}[Cog Unloaded]{self.CEND} {cog_dir}')
+            logger.info(f'{self.CBOLD}{self.CRED}[Cog Unloaded]{self.CEND} {cog_dir}')
 
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
         try:
             self.client.reload_extension(cog_dir)
         except commands.NoEntryPointError:
-            logging.info(
+            logger.info(
                 f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to reload {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.'
             )
         except commands.ExtensionNotLoaded:
-            logging.info(f'Cannot reload {cog_dir} because it is not loaded.')
+            logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
             self.cog_error(exc)
         else:
-            logging.info(f'{self.CBOLD}{self.CGREEN}[Cog Reloaded]{self.CEND} {cog_dir}')
+            logger.info(f'{self.CBOLD}{self.CGREEN}[Cog Reloaded]{self.CEND} {cog_dir}')
 
     @staticmethod
     def cog_error(exc: Exception):
@@ -194,7 +209,7 @@ class Watcher:
             logging.exception(exc)
 
     async def _preload(self):
-        logging.info('Preloading cogs...')
+        logger.info('Preloading cogs...')
         for cog in {(file.stem, file) for file in Path(Path.cwd() / self.path).rglob('*.py')}:
             new_dir = self.get_dotted_cog_path(cog[1])
             await self.load('.'.join([new_dir, cog[0]]))
