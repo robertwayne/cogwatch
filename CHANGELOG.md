@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED] -- 2022-25-06
+## [UNRELEASED] -- 2022-03-08
+
+## [3.0.1] -- 2022-03-08
+
+### Changed
+- Update load_extension calls to use `await` compatible with discord.py v2. (#18)
 
 ## [3.0.0] -- 2022-25-06
 
