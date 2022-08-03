@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'cogwatch'
-version = '3.0.0'
+version = '3.0.1'
 description = 'Automatic hot-reloading for your discord.py command files.'
 authors = ['Rob Wagner <rob@sombia.com>']
 license = 'MIT'
