@@ -1,7 +1,7 @@
 <h1 align="center">Cog Watch</h1>
     
 <div align="center">
-  <strong><i>Automatic hot-reloading for your discord.py / nextcord command files.</i></strong>
+  <strong><i>Automatic hot-reloading for your discord.py & nextcord command files.</i></strong>
   <br>
   <br>
   
@@ -20,11 +20,12 @@ files directory *(cogs)* and automatically reload them as you modify or move the
 real-time. No more reloading your bot / command yourself every time you edit an embed just to make
 sure it looks perfect!
 
-**Cogwatch does NOT support discord.py v2 yet. PRs welcome!**
+<br>
+<img align="center" src="assets/example.png" alt="">
 
 ## Features
 
-- Automatically reloads commands in real-time as you edit them *(no !reload <cmdName> needed)*.
+- Automatically reloads commands in real-time as you edit them *(no !reload <command_name> needed)*.
 - Can handle the loading of all your commands on start-up *(no boilerplate)*.
 
 ## Getting Started
@@ -34,8 +35,7 @@ You can install the library with `pip install cogwatch`.
 Import the `watch` decorator and apply it to your `on_ready` method and let the magic take effect.
 
 See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for more
-details, as well as an example on how to use the `cog` concept in `dpymenus` if you are unfamiliar
-with it.
+details.
 
 ```python
 import asyncio

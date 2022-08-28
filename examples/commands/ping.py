@@ -10,5 +10,5 @@ class Ping(commands.Cog):
         await ctx.reply('Pong!')
 
 
-def setup(client):
-    client.add_cog(Ping(client))
+async def setup(client):
+    await client.add_cog(Ping(client))

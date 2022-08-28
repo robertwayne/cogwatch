@@ -1,13 +1,13 @@
 [tool.poetry]
 name = 'cogwatch'
-version = '3.0.1'
+version = '3.1.0'
 description = 'Automatic hot-reloading for your discord.py / nextcord command files.'
 authors = ['Rob Wagner <rob@sombia.com>']
 license = 'MIT'
 readme = 'README.md'
 homepage = 'https://github.com/robertwayne/cogwatch'
 repository = 'https://github.com/robertwayne/cogwatch'
-keywords = ['discord.py', 'discord bot', 'cogs', 'hot-reload']
+keywords = ['discord.py', 'discord bot', 'cogs', 'hot-reload', 'nextcord']
 classifiers = [
   'Operating System :: OS Independent',
   'Typing :: Typed',
@@ -22,13 +22,13 @@ fmt = 'scripts:fmt'
 
 [tool.poetry.dependencies]
 python = '^3.8'
-'discord.py' = '1.7.3'
 watchfiles = "^0.15"
 
 [tool.poetry.dev-dependencies]
 pytest = '^7.1'
 black = '^22.3'
 python-dotenv = "^0.20.0"
+'discord.py' = '^2.0.0'
 
 [tool.black]
 line-length = 120
