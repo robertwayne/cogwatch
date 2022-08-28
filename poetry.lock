@@ -2,7 +2,7 @@
 name = "aiohttp"
 version = "3.8.1"
 description = "Async http client/server framework (asyncio)"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -22,7 +22,7 @@ speedups = ["aiodns", "brotli", "cchardet"]
 name = "aiosignal"
 version = "1.2.0"
 description = "aiosignal: a list of registered asynchronous callbacks"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -50,7 +50,7 @@ trio = ["trio (>=0.16)"]
 name = "async-timeout"
 version = "4.0.2"
 description = "Timeout context manager for asyncio programs"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -66,7 +66,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 name = "attrs"
 version = "22.1.0"
 description = "Classes Without Boilerplate"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
 
@@ -102,7 +102,7 @@ uvloop = ["uvloop (>=0.15.2)"]
 name = "charset-normalizer"
 version = "2.1.1"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.0"
 
@@ -132,7 +132,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 name = "discord.py"
 version = "2.0.1"
 description = "A Python wrapper for the Discord API"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.8.0"
 
@@ -149,7 +149,7 @@ docs = ["typing-extensions (>=4.3,<5)", "sphinxcontrib-websupport", "sphinxcontr
 name = "frozenlist"
 version = "1.3.1"
 description = "A list-like structure which implements collections.abc.MutableSequence"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -173,7 +173,7 @@ python-versions = "*"
 name = "multidict"
 version = "6.0.2"
 description = "multidict implementation"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -318,7 +318,7 @@ anyio = ">=3.0.0,<4"
 name = "yarl"
 version = "1.8.1"
 description = "Yet another URL library"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -329,7 +329,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = '^3.8'
-content-hash = "ec03f2aaa7da0a4f4a195a3dbc38eec7b5d4a8eb970fdc33b1ce5e17c341afd4"
+content-hash = "fffb479ff4113c9262c8e6f59eb3ae2beaba31988a4fe08fb24d5b831bc364e6"
 
 [metadata.files]
 aiohttp = [
