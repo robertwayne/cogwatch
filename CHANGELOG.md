@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED] -- 2022-03-08
+## [UNRELEASED] -- 2022-27-08
+
+## [3.1.0] -- 2022-27-08
+
+### Added
+- Support for [nextcord](https://github.com/nextcord/nextcord). (#19)
+
+### Changed
+- Example code now uses discord.py v2.
+- Fixed some minor meta-information bugs / typos.
+- Added basic example screenshot on the README.
 
 ## [3.0.1] -- 2022-03-08
 
