@@ -22,7 +22,7 @@ class Watcher:
     """The core cogwatch class -- responsible for starting up watchers and managing cogs.
 
     Attributes
-        :client: A discord Bot client.
+        :client: A Bot client.
         :path: Root name of the cogs directory; cogwatch will only watch within
         this directory -- recursively.
         :debug: Whether to run the bot only when the debug flag is True.
