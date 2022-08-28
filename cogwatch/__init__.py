@@ -1,5 +1,5 @@
 """
-dpymenus -- Simplified menus for discord.py developers.
+dpymenus -- Simplified menus for discord.py & nextcord developers.
 """
 
 __title__ = "cogwatch"

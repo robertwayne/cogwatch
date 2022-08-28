@@ -7,7 +7,7 @@ license = 'MIT'
 readme = 'README.md'
 homepage = 'https://github.com/robertwayne/cogwatch'
 repository = 'https://github.com/robertwayne/cogwatch'
-keywords = ['discord.py', 'discord bot', 'cogs', 'hot-reload']
+keywords = ['discord.py', 'discord bot', 'cogs', 'hot-reload', 'nextcord']
 classifiers = [
   'Operating System :: OS Independent',
   'Typing :: Typed',
