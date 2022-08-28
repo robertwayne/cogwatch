@@ -25,7 +25,7 @@ sure it looks perfect!
 
 ## Features
 
-- Automatically reloads commands in real-time as you edit them *(no !reload <cmdName> needed)*.
+- Automatically reloads commands in real-time as you edit them *(no !reload <command_name> needed)*.
 - Can handle the loading of all your commands on start-up *(no boilerplate)*.
 
 ## Getting Started
@@ -35,8 +35,7 @@ You can install the library with `pip install cogwatch`.
 Import the `watch` decorator and apply it to your `on_ready` method and let the magic take effect.
 
 See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for more
-details, as well as an example on how to use the `cog` concept in `dpymenus` if you are unfamiliar
-with it.
+details.
 
 ```python
 import asyncio
