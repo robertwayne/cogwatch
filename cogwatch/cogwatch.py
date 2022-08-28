@@ -9,6 +9,7 @@ try:
     from discord.ext import commands
 except ImportError:
     from nextcord.ext import commands
+
 from watchfiles import Change, awatch
 
 logger = logging.getLogger('cogwatch')
