@@ -5,10 +5,12 @@ import sys
 from functools import wraps
 from pathlib import Path
 
-from discord.ext import commands
+try:
+    from discord.ext import commands
+except ImportError:
+    from nextcord.ext import commands
 from watchfiles import Change, awatch
 
-print(__name__)
 logger = logging.getLogger('cogwatch')
 logger.addHandler(logging.NullHandler())
 # prevents log events bubbling up to the parent and duplicating output

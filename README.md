@@ -1,7 +1,7 @@
 <h1 align="center">Cog Watch</h1>
     
 <div align="center">
-  <strong><i>Automatic hot-reloading for your discord.py command files.</i></strong>
+  <strong><i>Automatic hot-reloading for your discord.py / nextcord command files.</i></strong>
   <br>
   <br>
   
@@ -15,7 +15,7 @@
 </div>
 <br>
 
-`cogwatch` is a utility that you can plug into your `discord.py` bot that will watch your command
+`cogwatch` is a utility that you can plug into your `discord.py` or `nextcord` bot that will watch your command
 files directory *(cogs)* and automatically reload them as you modify or move them around in
 real-time. No more reloading your bot / command yourself every time you edit an embed just to make
 sure it looks perfect!
