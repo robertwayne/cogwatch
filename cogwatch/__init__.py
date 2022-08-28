@@ -1,5 +1,5 @@
 """
-dpymenus -- Simplified menus for discord.py & nextcord developers.
+cogwatch - Automatic hot-reloading for your discord.py / nextcord command files.
 """
 
 __title__ = "cogwatch"
