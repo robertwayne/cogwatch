@@ -20,6 +20,9 @@ files directory *(cogs)* and automatically reload them as you modify or move the
 real-time. No more reloading your bot / command yourself every time you edit an embed just to make
 sure it looks perfect!
 
+<br>
+<img align="center" src="assets/example.png" alt="">
+
 ## Features
 
 - Automatically reloads commands in real-time as you edit them *(no !reload <cmdName> needed)*.
