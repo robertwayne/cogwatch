@@ -15,10 +15,13 @@ from cogwatch import Watcher, watch
 
 load_dotenv()
 
+intents = discord.Intents.default()
+intents.message_content = True
+
 
 class ExampleRunner(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix='.')
+        super().__init__(command_prefix='.', intents=intents)
 
     @watch(path='examples/commands', preload=True)
     async def on_ready(self):
