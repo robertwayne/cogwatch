@@ -21,14 +21,14 @@ example = 'runner:__poetry_run'
 fmt = 'scripts:fmt'
 
 [tool.poetry.dependencies]
-python = '^3.8'
+python = '^3.11'
 watchfiles = "^0.15"
 
 [tool.poetry.dev-dependencies]
-pytest = '^7.1'
-black = '^22.3'
-python-dotenv = "^0.20.0"
-'discord.py' = '^2.0.0'
+pytest = '^7.2'
+black = '^22.10'
+python-dotenv = "^0.21.0"
+'discord.py' = '^2.1.0'
 
 [tool.black]
 line-length = 120
