@@ -9,7 +9,7 @@ class ExampleBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix='!')
 
-    @watch(path='commands', debug=False)
+    @watch(path='commands', preload=True, debug=False)
     async def on_ready(self):
         print('Bot ready.')
 

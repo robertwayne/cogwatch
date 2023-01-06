@@ -9,7 +9,7 @@ client = commands.Bot(command_prefix='!')
 async def on_ready():
     print('Bot ready.')
 
-    watcher = Watcher(client, path='commands', preload=True)
+    watcher = Watcher(client, path='commands', preload=True, debug=False)
     await watcher.start()
 
 
