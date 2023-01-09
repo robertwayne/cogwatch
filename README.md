@@ -1,7 +1,7 @@
 <h1 align="center">Cog Watch</h1>
     
 <div align="center">
-  <strong><i>Automatic hot-reloading for your discord.py & nextcord command files.</i></strong>
+  <strong><i>Automatic hot-reloading for your discord.py command files.</i></strong>
   <br>
   <br>
   
@@ -15,27 +15,42 @@
 </div>
 <br>
 
-`cogwatch` is a utility that you can plug into your `discord.py` or `nextcord` bot that will watch your command
-files directory *(cogs)* and automatically reload them as you modify or move them around in
-real-time. No more reloading your bot / command yourself every time you edit an embed just to make
+`cogwatch` is a utility that you can plug into your `discord.py` *(or other
+supported library)* bot that will watch your command files directory *(cogs)*
+and automatically reload them as you modify or move them around in real-time.
+
+No more reloading your bot manually every time you edit an embed just to make
 sure it looks perfect!
 
-<br>
+
 <img align="center" src="assets/example.png" alt="">
+<br><br>
 
 ## Features
 
-- Automatically reloads commands in real-time as you edit them *(no !reload <command_name> needed)*.
-- Can handle the loading of all your commands on start-up *(no boilerplate)*.
+- Automatically reloads commands in real-time as you edit them *(no !reload
+  <command_name> needed)*.
+- Can handle the loading of all your commands on start-up *(removes boilerplate)*.
+
+## Supported Libraries
+
+`cogwatch` *should* work with any library that forked from `discord.py`.
+However, these libraries have been explicitly tested to work *(either by myself
+or from outside feedback)*:
+
+- [discord.py](https://discordpy.readthedocs.io/en/stable/)
+- [nextcord](https://docs.nextcord.dev/en/stable/)
+- [discord4py](https://docs.discord4py.dev/en/developer/)
 
 ## Getting Started
 
 You can install the library with `pip install cogwatch`.
 
-Import the `watch` decorator and apply it to your `on_ready` method and let the magic take effect.
+Import the `watch` decorator and apply it to your `on_ready` method and let the
+magic take effect.
 
-See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples) directory for more
-details.
+See the [examples](https://github.com/robertwayne/cogwatch/tree/master/examples)
+directory for more details.
 
 ```python
 import asyncio
@@ -47,7 +62,7 @@ class ExampleBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix='!')
 
-    @watch(path='commands')
+    @watch(path='commands', preload=True)
     async def on_ready(self):
         print('Bot ready.')
 
@@ -82,17 +97,19 @@ You can pass any of these values to the decorator:
 
 `colors`: Whether to use colorized terminal outputs or not. Defaults to True.
 
-**NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on Python. You can read more
-about that [here](https://docs.python.org/3/library/constants.html). In short, unless you run Python
-with the *-O* flag from your command line, **\_\_debug\_\_** will be **True**. If you just want to
-bypass this feature, pass in `debug=False` and it won't matter if the flag is enabled or not.
+**NOTE:** `cogwatch` will only run if the **\_\_debug\_\_** flag is set on
+Python. You can read more about that
+[here](https://docs.python.org/3/library/constants.html). In short, unless you
+run Python with the *-O* flag from your command line, **\_\_debug\_\_** will be
+**True**. If you just want to bypass this feature, pass in `debug=False` and it
+won't matter if the flag is enabled or not.
 
 ## Logging
 
-By default, the utility has a logger configured so users can get output to the console. You can
-disable this by passing in `default_logger=False`. If you want to hook into the logger -- for
-example, to pipe your output to another terminal or `tail` a file -- you can set up a custom logger
-like so:
+By default, the utility has a logger configured so users can get output to the
+console. You can disable this by passing in `default_logger=False`. If you want
+to hook into the logger -- for example, to pipe your output to another terminal
+or `tail` a file -- you can set up a custom logger like so:
 
 ```python
 import logging
