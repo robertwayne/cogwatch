@@ -8,7 +8,13 @@ from pathlib import Path
 try:
     from discord.ext import commands
 except ImportError:
-    from nextcord.ext import commands
+    try:
+        from nextcord.ext import commands
+    except ImportError:
+        try:
+            from disnake.ext import commands
+        except ImportError:
+            raise ImportError("Could not find any discord.py fork. Please install discord.py or one of the forks.")
 
 from watchfiles import Change, awatch
 
