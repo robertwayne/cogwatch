@@ -4,18 +4,33 @@ import os
 import sys
 from functools import wraps
 from pathlib import Path
-
-try:
-    from discord.ext import commands
-except ImportError:
-    from nextcord.ext import commands
-
 from watchfiles import Change, awatch
+from importlib import import_module
 
 logger = logging.getLogger('cogwatch')
 logger.addHandler(logging.NullHandler())
 # prevents log events bubbling up to the parent and duplicating output
 logger.propagate = False
+
+# import the first available discord.py library, preferring discord.py over nextcord ect.
+supported_libraries = ['discord.py', 'nextcord', 'disnake', 'pycord']
+for library_name in supported_libraries:
+    try:
+        library = import_module(library_name)
+        commands = import_module(f'{library_name}.ext.commands')
+    except ImportError:
+        logger.debug(f'Could not find {library_name} library, passing...')
+        pass
+    except Exception as e:
+        logger.error(f'Failed to import {library_name} library, please report this error.')
+        raise e
+    else:
+        globals()[library_name] = library
+        globals()[f'{library_name}.ext.commands'] = commands
+        break
+else:
+    raise ImportError("Could not find discord.py or another supported library, please install one of the following:\n"
+                      + '\n'.join(supported_libraries))
 
 
 class Watcher:
