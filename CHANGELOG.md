@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Fixed logging support not (fully) working when using libraries other than `discord.py`. (#28)
+- Fix erroneous error thrown when adding subdirectories to your command directory.
 
 ## [3.1.0] -- 2022-27-08
 
