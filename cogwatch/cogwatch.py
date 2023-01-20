@@ -3,17 +3,26 @@ import logging
 import os
 import sys
 from functools import wraps
-from pathlib import Path
-from watchfiles import Change, awatch
 from importlib import import_module
+from pathlib import Path
+
+from watchfiles import Change, awatch
 
 logger = logging.getLogger('cogwatch')
 logger.addHandler(logging.NullHandler())
 # prevents log events bubbling up to the parent and duplicating output
 logger.propagate = False
 
-# import the first available discord.py library, preferring discord.py over nextcord ect.
-supported_libraries = ['discord.py', 'nextcord', 'disnake', 'pycord']
+# We try to import the first available library that is supported. Note: the
+# library name does not neccessarily match the name of the module. For example,
+#
+# 'discord.py' is imported as 'discord'.
+# 'nextcord' is imported as 'nextcord'.
+# 'disnake' is imported as 'disnake'.
+# 'py-cord' is imported as 'discord'.
+# 'discord.py-message-components' (discord4py) is imported as 'discord'.
+#
+supported_libraries = ['discord', 'nextcord', 'disnake']
 for library_name in supported_libraries:
     try:
         library = import_module(library_name)
@@ -25,14 +34,44 @@ for library_name in supported_libraries:
         logger.error(f'Failed to import {library_name} library, please report this error.')
         raise e
     else:
+        logger.info(f'Found {library_name}.')
         globals()[library_name] = library
         globals()[f'{library_name}.ext.commands'] = commands
+
         break
 else:
     raise ImportError(
         "Could not find discord.py or another supported library, please install one of the following:\n"
         + '\n'.join(supported_libraries)
     )
+
+# We need to alias cog exceptions, as 'py-cord' moves them to the library
+# namespace whereas they are a part of the commands.ext module in other
+# libararies.
+#
+# I'm not sure if there is a cleaner way to structure this, as it must be set
+# from a dynamically loaded library. It works for now, though.
+ExtensionNotLoaded = None
+NoEntryPointError = None
+ExtensionFailed = None
+ExtensionNotFound = None
+ExtensionAlreadyLoaded = None
+ExtensionError = None
+
+try:
+    ExtensionNotLoaded = commands.ExtensionNotLoaded
+    NoEntryPointError = commands.NoEntryPointError
+    ExtensionFailed = commands.ExtensionFailed
+    ExtensionNotFound = commands.ExtensionNotFound
+    ExtensionAlreadyLoaded = commands.ExtensionAlreadyLoaded
+    ExtensionError = commands.ExtensionError
+except AttributeError:
+    ExtensionNotLoaded = library.ExtensionNotLoaded
+    NoEntryPointError = library.NoEntryPointError
+    ExtensionFailed = library.ExtensionFailed
+    ExtensionNotFound = library.ExtensionNotFound
+    ExtensionAlreadyLoaded = library.ExtensionAlreadyLoaded
+    ExtensionError = library.ExtensionError
 
 
 class Watcher:
@@ -185,9 +224,9 @@ class Watcher:
         """Loads a cog file into the client."""
         try:
             await self.client.load_extension(cog_dir)
-        except commands.ExtensionAlreadyLoaded:
+        except ExtensionAlreadyLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
-        except commands.NoEntryPointError:
+        except NoEntryPointError:
             logger.info(
                 f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to load {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.'
             )
@@ -200,7 +239,7 @@ class Watcher:
         """Unloads a cog file into the client."""
         try:
             await self.client.unload_extension(cog_dir)
-        except commands.ExtensionNotLoaded:
+        except ExtensionNotLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
             self.cog_error(exc)
@@ -211,11 +250,11 @@ class Watcher:
         """Attempts to atomically reload the file into the client."""
         try:
             await self.client.reload_extension(cog_dir)
-        except commands.NoEntryPointError:
+        except ExtensionNotLoaded:
             logger.info(
                 f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to reload {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.'
             )
-        except commands.ExtensionNotLoaded:
+        except ExtensionNotLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
             self.cog_error(exc)
@@ -225,7 +264,7 @@ class Watcher:
     @staticmethod
     def cog_error(exc: Exception):
         """Logs exceptions. TODO: Need thorough exception handling."""
-        if isinstance(exc, (commands.ExtensionError, SyntaxError)):
+        if isinstance(exc, (ExtensionError, SyntaxError)):
             logging.exception(exc)
 
     async def _preload(self):
