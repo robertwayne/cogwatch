@@ -122,7 +122,7 @@ class Watcher:
         if default_logger:
             watch_log = logging.getLogger('cogwatch')
             watch_log.setLevel(logging.INFO)
-            watch_handler = logging.StreamHandler(sys.stderr)
+            watch_handler = logging.StreamHandler(sys.stdout)
             watch_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
             watch_log.addHandler(watch_handler)
 
