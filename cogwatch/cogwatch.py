@@ -29,8 +29,10 @@ for library_name in supported_libraries:
         globals()[f'{library_name}.ext.commands'] = commands
         break
 else:
-    raise ImportError("Could not find discord.py or another supported library, please install one of the following:\n"
-                      + '\n'.join(supported_libraries))
+    raise ImportError(
+        "Could not find discord.py or another supported library, please install one of the following:\n"
+        + '\n'.join(supported_libraries)
+    )
 
 
 class Watcher:
