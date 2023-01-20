@@ -232,8 +232,9 @@ class Watcher:
             logger.info(
                 f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to load {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.'
             )
-        except Exception as exc:
-            self.cog_error(exc)
+        except ExtensionNotFound:
+            logger.debug(f'Cannot load {cog_dir} because it does not exist or is a folder.')
+            pass
         else:
             logger.info(f'{self.CBOLD}{self.CGREEN}[Cog Loaded]{self.CEND} {cog_dir}')
 
