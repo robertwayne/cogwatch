@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for [disnake](https://github.com/DisnakeDev/disnake). (#27)
 - Support for [discord4py](https://github.com/mccoderpy/discord.py-message-components) (#26)
 
+### Changed
+
+- Fixed logging support not (fully) working when using libraries other than `discord.py`. (#28)
+
 ## [3.1.0] -- 2022-27-08
 
 ### Added
