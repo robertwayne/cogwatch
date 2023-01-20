@@ -1,6 +1,6 @@
-# This is a testing module which interfaces with the documentation examples. You will need to
-# have an environment variable called 'COGWATCH_BOT_TOKEN' set in order for this to run. This
-# module must live in the root directory.
+# This is a testing module which interfaces with the documentation examples. You
+# will need to have an environment variable called 'COGWATCH_BOT_TOKEN' set in
+# order for this to run. This module must live in the root directory.
 #
 # You can run this file directly or with `poetry run example`.
 
