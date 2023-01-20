@@ -23,12 +23,12 @@ fmt = 'scripts:fmt'
 [tool.poetry.dependencies]
 python = '^3.10'
 watchfiles = "^0.15"
-discord-py = "^2.1.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = '^7.2'
 black = '^22.12'
 python-dotenv = "^0.21.0"
+discord-py = "^2.1.0"
 
 [tool.black]
 line-length = 120
