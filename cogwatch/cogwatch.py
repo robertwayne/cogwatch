@@ -21,8 +21,8 @@ logger.propagate = False
 # 'disnake' is imported as 'disnake'.
 # 'py-cord' is imported as 'discord'.
 # 'discord.py-message-components' (discord4py) is imported as 'discord'.
-#
 supported_libraries = ['discord', 'nextcord', 'disnake']
+
 for library_name in supported_libraries:
     try:
         library = import_module(library_name)
@@ -122,7 +122,7 @@ class Watcher:
         if default_logger:
             watch_log = logging.getLogger('cogwatch')
             watch_log.setLevel(logging.INFO)
-            watch_handler = logging.StreamHandler(sys.stdout)
+            watch_handler = logging.StreamHandler(sys.stderr)
             watch_handler.setFormatter(logging.Formatter('[%(name)s] %(message)s'))
             watch_log.addHandler(watch_handler)
 
@@ -223,7 +223,9 @@ class Watcher:
     async def load(self, cog_dir: str):
         """Loads a cog file into the client."""
         try:
-            await self.client.load_extension(cog_dir)
+            future = self.client.load_extension(cog_dir)
+            if future:
+                await future
         except ExtensionAlreadyLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except NoEntryPointError:
@@ -238,7 +240,9 @@ class Watcher:
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
         try:
-            await self.client.unload_extension(cog_dir)
+            future = self.client.unload_extension(cog_dir)
+            if future:
+                await future
         except ExtensionNotLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
@@ -249,7 +253,9 @@ class Watcher:
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
         try:
-            await self.client.reload_extension(cog_dir)
+            future = self.client.reload_extension(cog_dir)
+            if future:
+                await future
         except ExtensionNotLoaded:
             logger.info(
                 f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to reload {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.'
