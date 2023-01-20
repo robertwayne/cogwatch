@@ -14,13 +14,16 @@ logger.addHandler(logging.NullHandler())
 logger.propagate = False
 
 # We try to import the first available library that is supported. Note: the
-# library name does not neccessarily match the name of the module. For example,
+# library name does not neccessarily match the name of the module. For example:
 #
-# 'discord.py' is imported as 'discord'.
-# 'nextcord' is imported as 'nextcord'.
-# 'disnake' is imported as 'disnake'.
-# 'py-cord' is imported as 'discord'.
-# 'discord.py-message-components' (discord4py) is imported as 'discord'.
+# - 'discord.py' is imported as 'discord'.
+# - 'nextcord' is imported as 'nextcord'.
+# - 'disnake' is imported as 'disnake'.
+# - 'py-cord' is imported as 'discord'.
+# - 'discord.py-message-components' (discord4py) is imported as 'discord'.
+#
+# If you are adding support for a library, please ensure that the library name
+# works for both the commands extension and the base library.
 supported_libraries = ['discord', 'nextcord', 'disnake']
 
 for library_name in supported_libraries:
@@ -45,9 +48,8 @@ else:
         + '\n'.join(supported_libraries)
     )
 
-# We need to alias cog exceptions, as 'py-cord' moves them to the library
-# namespace whereas they are a part of the commands.ext module in other
-# libararies.
+# We need to alias cog exceptions, as 'pycord' moves them to the base library
+# module whereas they are a part of the commands.ext module in other libraries.
 #
 # I'm not sure if there is a cleaner way to structure this, as it must be set
 # from a dynamically loaded library. It works for now, though.
@@ -80,17 +82,17 @@ class Watcher:
     Attributes
         :client: A Bot client.
         :path: Root name of the cogs directory; cogwatch will only watch within
-        this directory -- recursively.
+               this directory -- recursively.
         :debug: Whether to run the bot only when the debug flag is True.
-        Defaults to True.
+                Defaults to True.
         :loop: Custom event loop. If not specified, will use the current running
-        event loop.
+               event loop.
         :default_logger: Whether to use the default logger (to sys.stdout) or
-        not. Defaults to True.
+                         not. Defaults to True.
         :preload: Whether to detect and load all found cogs on startup. Defaults
-        to False.
+                  to False.
         :colors: Whether to use colorized terminal outputs or not. Defaults to
-        True.
+                 True.
     """
 
     def __init__(
@@ -223,6 +225,10 @@ class Watcher:
     async def load(self, cog_dir: str):
         """Loads a cog file into the client."""
         try:
+            # We manually check if load_extension returns a future in order to
+            # support underlying variants of multiple libraries. For example,
+            # discord.py uses async under the hood, but (most) other libraries
+            # are synchronous.
             future = self.client.load_extension(cog_dir)
             if future:
                 await future
@@ -241,6 +247,7 @@ class Watcher:
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
         try:
+            # See load() for reasoning behind manually checking futures.
             future = self.client.unload_extension(cog_dir)
             if future:
                 await future
@@ -254,6 +261,7 @@ class Watcher:
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
         try:
+            # See load() for reasoning behind manually checking futures.
             future = self.client.reload_extension(cog_dir)
             if future:
                 await future
