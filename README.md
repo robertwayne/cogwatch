@@ -15,8 +15,8 @@
 </div>
 <br>
 
-`cogwatch` is a utility that you can plug into your `discord.py` *(or other
-supported library)* bot that will watch your command files directory *(cogs)*
+`cogwatch` is a utility that you can plug into your `discord.py` bot *(or various
+supported bot libraries)* that will watch your command files directory *(cogs)*
 and automatically reload them as you modify or move them around in real-time.
 
 No more reloading your bot manually every time you edit an embed just to make
@@ -35,12 +35,13 @@ sure it looks perfect!
 ## Supported Libraries
 
 `cogwatch` *should* work with any library that forked from `discord.py`.
-However, these libraries have been explicitly tested to work *(either by myself
-or from outside feedback)*:
+However, these libraries have been explicitly tested to work:
 
 - [discord.py](https://discordpy.readthedocs.io/en/stable/)
 - [nextcord](https://docs.nextcord.dev/en/stable/)
 - [discord4py](https://docs.discord4py.dev/en/developer/)
+- [disnake](https://disnake.readthedocs.io/en/latest/)
+- [pycord](https://docs.pycord.dev/en/stable/)
 
 ## Getting Started
 
