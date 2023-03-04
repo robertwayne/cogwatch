@@ -133,4 +133,4 @@ watch_log.addHandler(watch_handler)
 
 ## License
 
-cogwatch is licensed under the **[MIT License](/LICENSE)**.
+cogwatch is available under the **[MIT License](/LICENSE)**.
