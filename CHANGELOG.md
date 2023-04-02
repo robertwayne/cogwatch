@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Fixed an issue with `pycord` v2+ where load_extension now returns a list or dictionary instead of a None value. (#30)
+- Fixed an issue with `pycord` v2+ where the `load_extension` method now returns a list or dictionary instead of a None value. (#30)
 
 ## [3.2.0] -- 2023-19-01
 
