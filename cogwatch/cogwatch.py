@@ -36,7 +36,9 @@ for library_name in supported_libraries:
         logger.debug(f'Could not find {library_name} library, passing...')
         pass
     except Exception as e:
-        logger.error(f'Failed to import {library_name} library, please report this error.')
+        logger.error(
+            f'Failed to import {library_name} library. Please report this error here: https://github.com/robertwayne/cogwatch/issues'
+        )
         raise e
     else:
         logger.info(f'Found {library_name}.')
@@ -46,7 +48,7 @@ for library_name in supported_libraries:
         break
 else:
     raise ImportError(
-        "Could not find discord.py or another supported library, please install one of the following:\n"
+        'Could not find discord.py or another supported library, please install one of the following:\n'
         + '\n'.join(supported_libraries)
     )
 
@@ -228,7 +230,7 @@ class Watcher:
         """Handles the underlying logic for loading, unloading, and reloading
         cogs. Specifically, we need to handle the case where the underlying
         library uses async or sync setup functions.
-        
+
         discord.py, for example, is async, but (most) of the other libraries are
         sync.
         """

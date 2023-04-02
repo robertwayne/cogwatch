@@ -27,8 +27,12 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-example = 'runner:__poetry_run'
 fmt = 'scripts:fmt'
+discord4py = 'scripts:discord4py'
+discordpy = 'scripts:discordpy'
+disnake = 'scripts:disnake'
+nextcord = 'scripts:nextcord'
+pycord = 'scripts:pycord'
 
 [tool.poetry.dependencies]
 python = '^3.10'

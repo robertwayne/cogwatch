@@ -1,8 +1,6 @@
-# This is a testing module which interfaces with the documentation examples. You
-# will need to have an environment variable called 'COGWATCH_BOT_TOKEN' set in
-# order for this to run. This module must live in the root directory.
-#
-# You can run this file directly or with `poetry run example`.
+# This is a testing module which interfaces with `disnake`. You will need to
+# have an environment variable called 'COGWATCH_BOT_TOKEN' set in order for this
+# to run. Additionally, you will need to have the `disnake` package installed.
 
 import asyncio
 import logging
@@ -20,11 +18,11 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 
-class ExampleRunner(commands.Bot):
+class ExampleBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix='.', intents=intents)
 
-    @watch(path='examples/commands', preload=True)
+    @watch(path='integrations/disnake/commands', preload=True)
     async def on_ready(self):
         logging.info('Bot ready.')
 
@@ -38,7 +36,7 @@ class ExampleRunner(commands.Bot):
 
 
 async def main():
-    client = ExampleRunner()
+    client = ExampleBot()
     await client.start(os.getenv('COGWATCH_BOT_TOKEN'))
 
 
