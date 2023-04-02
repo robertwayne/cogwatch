@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.0] -- 2023-02-04
+
+### Changed
+
+- Fixed an issue with `pycord` v2+ where load_extension now returns a list or dictionary instead of a None value. (#30)
+
 ## [3.2.0] -- 2023-19-01
 
 ### Added
