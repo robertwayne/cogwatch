@@ -255,8 +255,9 @@ class Watcher:
         try:
             # See load() for reasoning behind manually checking futures.
             future = self.client.unload_extension(cog_dir)
-            if future:
+            if future and isinstance(future, collections.abc.Awaitable):
                 await future
+                
         except ExtensionNotLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
@@ -269,8 +270,9 @@ class Watcher:
         try:
             # See load() for reasoning behind manually checking futures.
             future = self.client.reload_extension(cog_dir)
-            if future:
+            if future and isinstance(future, collections.abc.Awaitable):
                 await future
+
         except ExtensionNotLoaded:
             logger.info(
                 f'{self.CBOLD}{self.CRED}[Error]{self.CEND} Failed to reload {self.CBOLD}{cog_dir}{self.CEND}; no entry point found.'
