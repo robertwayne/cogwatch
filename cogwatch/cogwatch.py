@@ -1,4 +1,5 @@
 import asyncio
+import collections
 import logging
 import os
 import sys
@@ -230,8 +231,13 @@ class Watcher:
             # discord.py uses async under the hood, but (most) other libraries
             # are synchronous.
             future = self.client.load_extension(cog_dir)
-            if future:
+
+            # We want to explicitely check if the future is an awaitable, as
+            # some of the libraries also return a list | dict type instead of
+            # None.
+            if future and isinstance(future, collections.abc.Awaitable):
                 await future
+
         except ExtensionAlreadyLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except NoEntryPointError:
