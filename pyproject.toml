@@ -42,7 +42,7 @@ watchfiles = "^0.15"
 pytest = '^7.2'
 black = '^22.12'
 python-dotenv = "^0.21.1"
-discord-py = "^2.2.2"
+disnake = "^2.8.1"
 
 [tool.black]
 line-length = 120
