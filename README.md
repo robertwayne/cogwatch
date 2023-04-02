@@ -8,7 +8,6 @@
   <a href="https://pypi.org/project/cogwatch"> <img
     src="https://img.shields.io/pypi/v/cogwatch?color=0073B7&label=Latest&style=for-the-badge"
       alt="Version" /> </a>
-  
   <a href="https://python.org"> <img
     src="https://img.shields.io/pypi/pyversions/cogwatch?color=0073B7&style=for-the-badge"
       alt="Python Version" /> </a>
@@ -98,7 +97,7 @@ initializing)_:
 | `preload` | `bool` | Whether to detect and load all cogs on start. | `False` |
 | `colors` | `bool` | Whether to use colorized terminal outputs or not. | `True` |
 | `default_logger` | `bool` | Whether to use the default logger _(to sys.stdout)_ or not. | `True` |
-| `loop` | `asyncio.AbstractEventLoop` | Custom event loop. | `asyncio.get_event_loop()` |
+| `loop` | `AbstractEventLoop` | Custom event loop. | `get_event_loop()` |
 | `debug` | `bool` | Whether to run the bot only when the Python __\_\_debug\_\___ flag is True. | `True` |
 
 __NOTE:__ `cogwatch` will only run if the __\_\_debug\_\___ flag is set on
