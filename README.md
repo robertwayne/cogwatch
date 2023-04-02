@@ -85,6 +85,12 @@ if __name__ == '__main__':
     asyncio.run(main())
 ```
 
+__NOTE__: If you're following the example command files in the
+[examples](/examples) directory, make sure you only use `async/await` on your
+setup function if the library you're using supports it. For example,
+`discord.py` uses async setup functions, but many other libraries do not.
+`cogwatch` supports both under-the-hood.
+
 ## Configuration
 
 These options can be passed to the decorator *(or the class if manually
