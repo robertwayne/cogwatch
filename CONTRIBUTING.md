@@ -25,6 +25,19 @@ Please include, when you can:
 - Use whitespace to break up dense code (if/else, try/catch).
 - All library code should be type annotated. Examples should not.
 
+## Check Your Work
+
+- Run the unit & integration tests against each supported library to ensure your
+  changes don't break anything.
+
+For integration testing, the available scripts are:
+
+- `poetry run discord4py`
+- `poetry run discordpy`
+- `poetry run disnake`
+- `poetry run nextcord`
+- `poetry run pycord`
+
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
