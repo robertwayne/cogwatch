@@ -232,7 +232,7 @@ class Watcher:
             # are synchronous.
             future = self.client.load_extension(cog_dir)
 
-            # We want to explicitely check if the future is an awaitable, as
+            # We want to explicitly check if the future is an awaitable, as
             # some of the libraries also return a list | dict type instead of
             # None.
             if future and isinstance(future, collections.abc.Awaitable):
