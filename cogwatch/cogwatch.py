@@ -6,6 +6,7 @@ import sys
 from functools import wraps
 from importlib import import_module
 from pathlib import Path
+from typing import Callable
 
 from watchfiles import Change, awatch
 
@@ -223,20 +224,26 @@ class Watcher:
                 logger.info(f'Watching for file changes in {self.CBOLD}{Path.cwd() / self.path}{self.CEND}...')
                 self.loop.create_task(self._start())
 
+    async def handle_extension(self, func: Callable, cog_dir: str):
+        """Handles the underlying logic for loading, unloading, and reloading
+        cogs. Specifically, we need to handle the case where the underlying
+        library uses async or sync setup functions.
+        
+        discord.py, for example, is async, but (most) of the other libraries are
+        sync.
+        """
+        future = func(cog_dir)
+
+        # We want to explicitly check if the future is an awaitable, as
+        # some of the libraries also return a list | dict type instead of
+        # None.
+        if future and isinstance(future, collections.abc.Awaitable):
+            await future
+
     async def load(self, cog_dir: str):
         """Loads a cog file into the client."""
         try:
-            # We manually check if load_extension returns a future in order to
-            # support underlying variants of multiple libraries. For example,
-            # discord.py uses async under the hood, but (most) other libraries
-            # are synchronous.
-            future = self.client.load_extension(cog_dir)
-
-            # We want to explicitly check if the future is an awaitable, as
-            # some of the libraries also return a list | dict type instead of
-            # None.
-            if future and isinstance(future, collections.abc.Awaitable):
-                await future
+            await self.handle_extension(self.client.load_extension, cog_dir)
 
         except ExtensionAlreadyLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
@@ -253,11 +260,8 @@ class Watcher:
     async def unload(self, cog_dir: str):
         """Unloads a cog file into the client."""
         try:
-            # See load() for reasoning behind manually checking futures.
-            future = self.client.unload_extension(cog_dir)
-            if future and isinstance(future, collections.abc.Awaitable):
-                await future
-                
+            await self.handle_extension(self.client.unload_extension, cog_dir)
+
         except ExtensionNotLoaded:
             logger.info(f'Cannot reload {cog_dir} because it is not loaded.')
         except Exception as exc:
@@ -268,10 +272,7 @@ class Watcher:
     async def reload(self, cog_dir: str):
         """Attempts to atomically reload the file into the client."""
         try:
-            # See load() for reasoning behind manually checking futures.
-            future = self.client.reload_extension(cog_dir)
-            if future and isinstance(future, collections.abc.Awaitable):
-                await future
+            await self.handle_extension(self.client.reload_extension, cog_dir)
 
         except ExtensionNotLoaded:
             logger.info(
